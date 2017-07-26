@@ -1,0 +1,8 @@
+{
+    "server": {
+        "port": 3003
+    },
+    "mongodb": {
+        "database": "mongodb://localhost/iwt-test"
+    }
+}

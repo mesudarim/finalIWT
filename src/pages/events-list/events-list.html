@@ -1,0 +1,60 @@
+<!--
+"clean": "ionic-app-scripts clean",
+    "build": "ionic-app-scripts build",
+    "lint": "ionic-app-scripts lint",
+    "ionic:build": "ionic-app-scripts build",
+    "ionic:serve": "ionic-app-scripts serve",
+    "api": "json-server --watch ./server/db.json",
+    "serve": "set NODE_ENV=development&&nodemon --verbose",
+    "test": "set NODE_ENV=testing&&mocha"
+
+
+  Generated template for the EventsListPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <!-- <ion-title>{{userName}}</ion-title> -->
+    <ion-buttons end>
+      <button ion-button icon-only>
+        <ion-icon ios="ios-contacts" md="md-contacts"></ion-icon>
+      </button>
+    </ion-buttons>
+
+    <ion-buttons end>
+      <ion-item class="avatar">
+        <ion-avatar item-end>
+          <!--Ici l'image doit être prise de l'objet user / photo profile  -->
+          <img src="../assets/img/zorro.jpg">
+        </ion-avatar>
+      </ion-item>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- <new-event></new-event> -->
+  <ion-list>
+    <!-- {{(events | async) | json}} -->
+    <ion-item *ngFor="let item of (events | async)">
+      <ion-thumbnail item-start class="thumbnailEventList">
+        <img src="{{item.imageUrl}}">
+      </ion-thumbnail>
+      <ion-thumbnail item-end class="thumbnailEventList iwt">
+        <img src="../assets/img/iwt2.png">
+      </ion-thumbnail>
+      <p (click)="getEventDetails(item)" class="link">{{item.eventName}}</p>
+      <p>{{item.where}}</p>
+      <p (click)="getUserList(item)"><span class="link">{{item.eventOwner}}</span> was there</p>
+    </ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="newEvent()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

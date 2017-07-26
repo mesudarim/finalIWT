@@ -1,0 +1,35 @@
+import { Injectable } from '@angular/core';
+
+/*
+  Generated class for the EndpointsProvider provider.
+
+  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
+  for more info on providers and Angular DI.
+*/
+@Injectable()
+export class EndpointsProvider {
+
+  API_PATH: string = "http://localhost:3002";
+
+  getAuth(){
+    return this.API_PATH + "/api/authenticate";
+  }
+
+  getLogin(){
+    console.log("dans getlogin of endpoints")
+    return this.API_PATH + "/api/users/login";
+  }
+
+  getSignup(){
+    return this.API_PATH + "/api/users";
+  }
+
+  setPassword(userId){
+    return this.API_PATH + "/api/users/" + userId + "/actions/set-password";
+  }
+
+  // getPlaces(){
+  //   return this.API_PATH + "/api/places"
+  // }
+
+}
