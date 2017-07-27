@@ -39,6 +39,17 @@ router.get("/", (req, res, next) => {
     }).catch(next);
 });
 
+// delete a event
+router.delete("/:id", (req, res, next) => {
+    const id = req.params.id;
+    Event.findByIdAndRemove(id).then(found => {
+        if (found)
+            return res.send(found);
+        else
+            return res.status(404 /* Not Found */).send();
+    }).catch(next)
+});
+
 module.exports = router;
 
 // // update

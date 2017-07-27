@@ -92,12 +92,15 @@ router.get("/:uid/notifications",
             //auth.basic(),
             (req, res, next) => {
     const user = res.locals.user;
+    const notifications = user.notifications
+    console.log("notifications " + notifications)
     console.log("entré dans get notifications " + user._id)
-    User.find(user._id).then(results => {
-        console.log(results)
-
-        return res.send(results.notifications);
-    }).catch(next);
+    return res.send(notifications);
+    // User.find(user._id).then(results => {
+    //     console.log("ds user/notification", results.notifications)
+    //
+    //     return res.send(results);
+    // }).catch(next);
     //return res.send(user);
     // User.find({req.body._id}).then(results => {
     //          return res.send(results);
@@ -110,46 +113,25 @@ router.post("/:uid/notifications",
               (req, res, next) => {
     const user = res.locals.user;
     User.find(user._id).then(results => {
-        console.log('-------------',results)
+        console.log('results',results)
         let updated = user
         if(updated.notifications.length === 0 ) {
           updated.notifications = []
         }
-        //return resultats.notifications.push(req.body);
-        // resultats.notifications.push(req.body);
         updated.notifications.push(req.body);
-        console.log('updated--------------', updated);
-        const promise = User.findByIdAndUpdate(user._id, resultats.notifications, {overwrite: true, new: true});
+        console.log('updated', updated);
+        const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
             return promise.then(found => {
                 if (found){
-                  console.log('found----------------');
+                  console.log('found', found);
                       return res.send(found);
                 }
-
                     // return found
                 else
                     return res.status(404 /* Not Found */).send();
             }).catch(next);
-
     })
     .catch(next);
-
-    // .then(resultats=>{ console.log("xxx resultats ",  resultats)
-    //   const promise = User.findByIdAndUpdate(user._id, resultats.notifications, {overwrite: true, new: true});
-    //       return promise.then(found => {
-    //           if (found)
-    //               //return res.send(found);
-    //               return found
-    //           else
-    //               return res.status(404 /* Not Found */).send();
-    //       }).catch(next);
-    // }).then(found =>{
-    //   return res.send(user);
-    // }).catch(next);
-
-
-    //return res.send(user);
-
 });
 
 // read all the users
@@ -159,16 +141,18 @@ router.get("/", (req, res, next) => {
     }).catch(next);
 });
 
+// read a user
+router.get("/:uid", (req, res, next) => {
+    const user = res.locals.user;
+    return res.send(user);
+});
+
 // expose our router to require()
 module.exports = router;
 
 
 
-// // read a user
-// router.get("/:uid", (req, res, next) => {
-//     const user = res.locals.user;
-//     return res.send(user);
-// });
+
 
 // // read all the users
 // router.get("/", (req, res, next) => {

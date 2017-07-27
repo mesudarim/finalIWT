@@ -5,6 +5,9 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Platform } from 'ionic-angular';
 import { MapPage } from '../map/map'
 import { Camera, CameraOptions } from '@ionic-native/camera';
+// import { File } from '@ionic-native/file';
+// import { Transfer, TransferObject } from '@ionic-native/transfer';
+// import { FilePath } from '@ionic-native/file-path';
 
 import { EventsProvider } from '../../providers/events'
 //import { BehaviorSubject, Observable } from 'rxjs';
@@ -30,7 +33,7 @@ export class NewEventPage {
   lon: number;
   eventName: string;
   map: MapPage;
-  duration: string;
+  duration: string = "1 hour";
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -39,6 +42,9 @@ export class NewEventPage {
               private camera: Camera,
               public zone: NgZone,
               private events: EventsProvider
+              // private transfer: Transfer,
+              // private file: File,
+              // private filePath: FilePath
   ) {
     // this.platform.ready().then(() => {
     //   //console.log('here', this)
@@ -97,6 +103,7 @@ export class NewEventPage {
             //this.$where.next(results[0].formatted_address);
             this.zone.run(() => {
               this.where = results[0].formatted_address
+              console.log(this.where)
             })
           });
         });
@@ -115,7 +122,8 @@ export class NewEventPage {
 
   submit(){
     let when = this.when;
-    let where = this.where;
+    let where = {lat: this.lat,
+                lng: this.lon};
     let eventName = this.eventName;
     let duration = this.duration
 
@@ -137,6 +145,7 @@ export class NewEventPage {
   }
 
   openMap(){
+    console.log(this.lat, this.lon)
     this.navCtrl.push('MapPage', {
         lat: this.lat,
         long : this.lon

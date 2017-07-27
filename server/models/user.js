@@ -15,7 +15,8 @@ const userSchema = new mongoose.Schema({
     email: {type: String, required: true, unique: true},
     nickname:  {type: String, required: true},
     hash:  {type: String, set: val => this.hash},
-    notifications: {type:Array},
+    notifications: { type: Array },
+    friends: {type:Array}
     // eventuellement avec un set: val=> []
     //friends
 });

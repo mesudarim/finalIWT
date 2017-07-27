@@ -10,6 +10,9 @@ import { AuthProvider } from '../providers/auth';
 import { EventsProvider } from '../providers/events';
 import { UsersProvider } from '../providers/users';
 import { Camera } from '@ionic-native/camera';
+// import { File } from '@ionic-native/file';
+// import { Transfer } from '@ionic-native/transfer';
+// import { FilePath } from '@ionic-native/file-path';
 //import { MapComponent } from '../components/map/map';
 
 import { EnvironmentsModule } from './environment/environment.module'
@@ -37,11 +40,14 @@ import { EndpointsProvider } from '../providers/endpoints';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    EndpointsProvider, 
+    EndpointsProvider,
     AuthProvider,
     EventsProvider,
     UsersProvider,
     Camera
+    // File,
+    // Transfer,
+    // FilePath
   ]
 })
 export class AppModule {}

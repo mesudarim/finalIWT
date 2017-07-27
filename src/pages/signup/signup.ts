@@ -41,11 +41,7 @@ export class SignupPage {
   }
 
   signup() {
-    console.log(this.signupForm.value)
-    console.log("email" + this.email)
-    //console.log(this.signupForm.email.value)
     console.log(this.signupForm.value.email)
-    console.log(this.signupForm)
 
     this.auth
       .signup({email:this.signupForm.value.email,password:this.signupForm.value.password,nickname:this.signupForm.value.nickname})

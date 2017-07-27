@@ -4,10 +4,6 @@ import { Observable } from "rxjs";
 
 import { User } from '../../models/user'
 
-//import { NewEventPage } from '../new-event/new-event';
-//import { UserListPage } from '../user-list/user-list';
-//import { EventDetailsPage } from '../event-details/event-details';
-
 import { EventsProvider, IEvent } from '../../providers/events'
 
 /**
@@ -26,21 +22,13 @@ export class EventsListPage {
 
   public events: Observable<IEvent[]>;
 
-  // items:Array<User> = [];
-  // user$:Observable<User>;
-
-  //rootPage:string = 'EventsListPage';
-
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private eventsProvider: EventsProvider
             ) {
-
-
       this.events=this.eventsProvider.events$;
       this.eventsProvider.loadAll()
-      console.log("sent load all")
-
+      console.log("sent load all", this.events)
 }
 
   newEvent(){
@@ -62,6 +50,14 @@ export class EventsListPage {
     this.navCtrl.push('EventDetailsPage', {
       item: item
     });
+  }
+
+  getFriendsList(){
+    console.log("getFriendsList")
+    this.navCtrl.push('FriendsPage', {
+      user: User
+    });
+    console.log("getFriendsList", User)
   }
 
 

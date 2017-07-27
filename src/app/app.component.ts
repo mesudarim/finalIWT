@@ -24,7 +24,7 @@ export class MyApp {
       splashScreen.hide();
     });
 
-
+    //this.initialise();
     // this.auth.user$.subscribe(user => {
     //   if (user) {
     //     this.rootPage = 'TabsPage';
@@ -44,4 +44,13 @@ export class MyApp {
 
 
   }
+
+
+  // initialise(){
+  //   let script = document.createElement('script')
+  //   script.id = "googleMap";
+  //   script.async = true;
+  //   script.src= 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCv2i8Das8W3j2xw5cj7VN7-dcJJVekbiY&libraries=places&callback=initMap'
+  //   document.body.appendChild(script)
+  // }
 }

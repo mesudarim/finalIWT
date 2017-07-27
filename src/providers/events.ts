@@ -23,10 +23,11 @@ export interface IEvent {
   eventName?: string;
   when?: string;
   duration? : string;
-  where?: string;
+  where?: {lat: number,
+            lng: number};
   imageUrl?: string;
-  //users? = [];
-  //galery? = [];
+  users? : Array<any>;
+  galery? : Array<any>;
 }
 
 
