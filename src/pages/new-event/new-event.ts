@@ -28,6 +28,7 @@ export class NewEventPage {
 
   currDate : string = new Date().toISOString();;
   where: string;
+  area: string;
   when : string = this.currDate;
   lat: number;
   lon: number;
@@ -102,8 +103,10 @@ export class NewEventPage {
           geocoder.geocode({'location': latlng}, (results, status) => {
             //this.$where.next(results[0].formatted_address);
             this.zone.run(() => {
-              this.where = results[0].formatted_address
+              this.where = results[0].formatted_address;
+              this.area = results[1].formatted_address;
               console.log(this.where)
+              console.log(this.area)
             })
           });
         });
@@ -123,7 +126,9 @@ export class NewEventPage {
   submit(){
     let when = this.when;
     let where = {lat: this.lat,
-                lng: this.lon};
+                lng: this.lon,
+                address: this.where,
+                area: this.area};
     let eventName = this.eventName;
     let duration = this.duration
 

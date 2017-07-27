@@ -49,8 +49,16 @@ export class AuthProvider {
     .map(response => {
       console.log("response " + response)
       let user = response.json();
+      //console.log("user " + user); return object object
+      console.log("user " + user.email);
+      console.log("user " + values.password);
+      console.log("user " + values.email);
+      console.log("user " + user._id);
+
       return this.http.post(this.endpoints.setPassword(user._id), values.password)
-      .map(response => response.text())
+      .map(response => {response.text();
+                          console.log("response final" + response)
+                        }).catch(err => Observable.throw(this.handleErrors(err)))
     })
     .catch(err => Observable.throw(this.handleErrors(err)));
 }

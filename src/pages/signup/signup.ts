@@ -42,7 +42,6 @@ export class SignupPage {
 
   signup() {
     console.log(this.signupForm.value.email)
-
     this.auth
       .signup({email:this.signupForm.value.email,password:this.signupForm.value.password,nickname:this.signupForm.value.nickname})
       .subscribe(
@@ -55,9 +54,6 @@ export class SignupPage {
           this.error = err.statusText
         }
       );
-
-
-
   }
 
   presentAlert() {

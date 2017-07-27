@@ -29,7 +29,17 @@ router.post('/login', (req, res, next) => {
   console.dir("req.body.email " + req.body.email);
   console.dir("req.body.password " + req.body.password);
 
-  User.authenticate(req.body.email, req.body.password);
+  User.authenticate(req.body.email, req.body.password).then(user => {
+    if (user){
+      res.send(user);
+      console.log(user)
+    }
+
+    else {
+      res.status(401).send()
+    }
+  }
+  )
 
 });
 
@@ -37,7 +47,9 @@ router.post('/login', (req, res, next) => {
 router.post("/", (req, res, next) => {
   console.dir(req.body);
     User.create(req.body).then(created => {
+      console.log("created " + created)
         return res.status(201 /* Created */).send(created);
+
     }).catch(err => {
         if (err.name === 'ValidationError') {
             return res.status(400 /* Bad Request */).send({
@@ -61,7 +73,9 @@ router.post("/:uid/actions/set-password", (req, res, next) => {
 });
 
 // change a user's password
-router.post("/:uid/actions/reset-password", auth.basic(), function (req, res, next) {
+router.post("/:uid/actions/reset-password",
+            //auth.basic(),
+            function (req, res, next) {
     const logged_in = req.user;
     const target = res.locals.user;
     console.dir(logged_in.toJSON(), {colors: true});
@@ -95,7 +109,7 @@ router.get("/:uid/notifications",
     const notifications = user.notifications
     console.log("notifications " + notifications)
     console.log("entré dans get notifications " + user._id)
-    return res.send(notifications);
+    res.send(notifications);
     // User.find(user._id).then(results => {
     //     console.log("ds user/notification", results.notifications)
     //

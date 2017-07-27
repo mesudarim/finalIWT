@@ -7,6 +7,7 @@
 
 const express  = require("express");
 /* our applications modules */
+const auth    = require("../auth");
 const Event = require("../models/event");
 
 const router = new express.Router();
@@ -33,7 +34,9 @@ router.get("/:id", (req, res, next) => {
 });
 
 // read all the events
-router.get("/", (req, res, next) => {
+router.get("/", 
+            //auth.basic(),  c'est comme cela que cela devrait être fait sans passer par le login, il va de tout facon devoir verifier pour acceder aux events.
+            (req, res, next) => {
     Event.find({/* no conditions */}).then(results => {
         return res.send(results);
     }).catch(next);

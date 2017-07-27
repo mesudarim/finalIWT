@@ -18,6 +18,8 @@ export class EndpointsProvider {
   getLogin(){
     console.log("dans getlogin of endpoints")
     return this.API_PATH + "/api/users/login";
+    // L'idée est d'aller directement au notifications car l'authentication se fait en chemin
+    //return this.API_PATH + "/api/events";
   }
 
   getSignup(){

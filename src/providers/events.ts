@@ -19,12 +19,15 @@ import { IEnvironment } from "../../environments/env-model";
 
 export interface IEvent {
   id?: number;
+  area?:string;
   eventOwner?: string;
   eventName?: string;
   when?: string;
   duration? : string;
-  where?: {lat: number,
-            lng: number};
+  where?: {lat?: number,
+          lng?: number,
+          address?: string,
+          area?: string};
   imageUrl?: string;
   users? : Array<any>;
   galery? : Array<any>;
