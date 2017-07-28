@@ -44,24 +44,21 @@ login() {
     });
 
     loading.present();
-
     //let email = this.email
 
     setTimeout( _=>{
        loading.dismiss();
-     }, 1000);
+          }, 1000);
 
      console.log(this.email)
-
-
      this.auth
       .login({email:this.email, password:this.password })
       .finally(() => loading.dismiss())
       .subscribe(
-        () => {},
+        () => {
+          console.log("dans subscribe login")
+          this.myApp.rootPage = 'EventsListPage';},
         err => this.handleError(err));
-
-    this.myApp.rootPage = 'EventsListPage';
   }
 
   handleError(error: any) {

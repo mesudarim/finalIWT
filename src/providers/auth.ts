@@ -32,7 +32,10 @@ export class AuthProvider {
   login(values: any): Observable<any> {
     console.log("in login of this.auth");
     return this.http.post(this.endpoints.getLogin(), values)
-    .map(response => response.text())
+    .map(response => {
+          console.log("dans login respone", response)
+        response.text()
+      })
     .catch(err => Observable.throw(this.handleErrors(err)));
 }
 
