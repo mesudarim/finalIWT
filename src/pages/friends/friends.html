@@ -15,8 +15,8 @@
 
 <ion-content padding>
   <!-- <new-event></new-event> -->
-  <ion-list>
-    <ion-item *ngFor="let friend of (friends | async)">
+  <ion-list *ngIf="user">
+    <ion-item *ngFor="let friend of user.friends">
       <ion-thumbnail item-start>
         <img src="{{friend.imageUrl}}">
       </ion-thumbnail>

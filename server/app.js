@@ -45,6 +45,8 @@ app.use(cors())
 /* authentication: Basic Auth with Passport */
 passport.use(new BasicStrategy((email, password, done) => {
     User.authenticate(email, password).then(user => {
+        app.locals.authUser = user;
+        console.log("dans passport.use user", user)
         return done(/* no error */null, user);
     }).catch(done);
 }));

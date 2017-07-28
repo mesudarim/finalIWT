@@ -19,7 +19,6 @@ import { EventsProvider, IEvent } from '../../providers/events'
 })
 export class EventsListPage {
 
-
   public events: Observable<IEvent[]>;
 
   constructor(public navCtrl: NavController,
@@ -46,8 +45,6 @@ export class EventsListPage {
     });
   }
 
-
-
   //Dans le HTML on met une fonction qui appele le debugit et là on a accès aux objets!
   // debugIt(thing) {
   //   console.log(thing);
@@ -61,17 +58,11 @@ export class EventsListPage {
   }
 
   getFriendsList(){
-    console.log("getFriendsList")
+    // console.log("getFriendsList")
     this.navCtrl.push('FriendsPage', {
-      user: User
+      // user: User
     });
-    console.log("getFriendsList", User)
+    //console.log("getFriendsList", User)
   }
-
-
-  // newEvent(){
-  //   console.log("newEvent")
-  //   this.rootPage= 'NewEventPage'
-  // }
 
 }
