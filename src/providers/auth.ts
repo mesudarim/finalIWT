@@ -49,11 +49,6 @@ export class AuthProvider {
     .map(response => {
       console.log("response " + response)
       let user = response.json();
-      //console.log("user " + user); return object object
-      console.log("user " + user.email);
-      console.log("user " + values.password);
-      console.log("user " + values.email);
-      console.log("user " + user._id);
       return response.json()
 
     })

@@ -4,6 +4,8 @@ const express = require("express");
 const auth    = require("../auth");
 /* our applications modules */
 const User = require("../models/user");
+const Notifications = require("../models/notification");
+const Friends = require("../models/friends");
 
 const router = new express.Router();
 
@@ -25,10 +27,6 @@ router.param('uid', (req, res, next, uid) => {
 
 //login
 router.post('/login', (req, res, next) => {
-  console.log("dans server login");
-  console.dir("req.body.email " + req.body.email);
-  console.dir("req.body.password " + req.body.password);
-
   User.authenticate(req.body.email, req.body.password).then(user => {
     if (user){
       res.send(user);
@@ -42,6 +40,10 @@ router.post('/login', (req, res, next) => {
   )
 
 });
+
+///////////////////////////////
+///////////USERS
+//////////////////////////////
 
 // create a user
 router.post("/", (req, res, next) => {
@@ -60,6 +62,37 @@ router.post("/", (req, res, next) => {
     });
 });
 
+// read all the users
+router.get("/", (req, res, next) => {
+    User.find({}).then(results => {
+        return res.send(results);
+    }).catch(next);
+});
+
+
+// //Juste pour nettoyer la base de donnée
+// // delete all event
+// router.delete("/", (req, res, next) => {
+//     const id = req.params.id;
+//     User.remove({}).then(found => {
+//         if (found)
+//             return res.send(found);
+//         else
+//             return res.status(404 /* Not Found */).send();
+//     }).catch(next)
+// });
+//
+// read a user
+router.get("/:uid", (req, res, next) => {
+    const user = res.locals.user;
+    return res.send(user);
+});
+
+
+
+///////////////////////////////
+///////////PASSWORD
+//////////////////////////////
 
 // set a user's password
 router.post("/:uid/actions/set-password", (req, res, next) => {
@@ -92,7 +125,9 @@ router.post("/:uid/actions/reset-password",
     }).catch(next);
 });
 
-
+///////////////////////////////
+///////////EVENTS
+//////////////////////////////
 
 // read the events of a user
 router.get("/:uid/myEvents", (req, res, next) => {
@@ -100,6 +135,10 @@ router.get("/:uid/myEvents", (req, res, next) => {
     return res.send(user);
 });
 
+
+///////////////////////////////
+///////////NOTIFICATIONS
+//////////////////////////////
 
 // read the notification of the logged user
 router.get("/:uid/notifications",
@@ -110,15 +149,6 @@ router.get("/:uid/notifications",
     console.log("notifications " + notifications)
     console.log("entré dans get notifications " + user._id)
     res.send(notifications);
-    // User.find(user._id).then(results => {
-    //     console.log("ds user/notification", results.notifications)
-    //
-    //     return res.send(results);
-    // }).catch(next);
-    //return res.send(user);
-    // User.find({req.body._id}).then(results => {
-    //          return res.send(results);
-    //      }).catch(next);
 });
 
 // push the notification of the logged user
@@ -148,17 +178,72 @@ router.post("/:uid/notifications",
     .catch(next);
 });
 
-// read all the users
-router.get("/", (req, res, next) => {
-    User.find({}).then(results => {
-        return res.send(results);
-    }).catch(next);
+///////////////////////////////
+///////////FRIENDS
+//////////////////////////////
+
+router.get("/:uid/friends",
+            //auth.basic(),
+            (req, res, next) => {
+    const user = res.locals.user;
+    const friends = user.friends
+    console.log("friends " + friends)
+    console.log("entré dans get friends " + user._id)
+    res.send(friends);
 });
 
-// read a user
-router.get("/:uid", (req, res, next) => {
+// push the new friends of the logged user
+router.post("/:uid/friends",
+              //auth.basic(),
+              (req, res, next) => {
     const user = res.locals.user;
-    return res.send(user);
+    User.find(user._id).then(results => {
+        console.log('results',results)
+        let updated = user
+        if(updated.friends.length === 0 ) {
+          updated.friends = []
+        }
+        updated.friends.push(req.body);
+        console.log('updated', updated);
+        const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
+            return promise.then(found => {
+                if (found){
+                  console.log('found', found);
+                      return res.send(found);
+                }
+                    // return found
+                else
+                    return res.status(404 /* Not Found */).send();
+            }).catch(next);
+    })
+    .catch(next);
+});
+
+// remove a friend from the list of the logged user
+router.delete("/:uid/friends",
+              //auth.basic(),
+              (req, res, next) => {
+    const user = res.locals.user;
+    User.find(user._id).then(results => {
+        console.log('results',results)
+        let updated = user
+        if(updated.friends.length === 0 ) {
+          updated.friends = []
+        }
+        updated.friends.push(req.body);
+        console.log('updated', updated);
+        const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
+            return promise.then(found => {
+                if (found){
+                  console.log('found', found);
+                      return res.send(found);
+                }
+                    // return found
+                else
+                    return res.status(404 /* Not Found */).send();
+            }).catch(next);
+    })
+    .catch(next);
 });
 
 // expose our router to require()

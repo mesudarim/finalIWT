@@ -8,8 +8,10 @@ import { MyApp } from './app.component';
 import { AuthProvider } from '../providers/auth';
 
 import { EventsProvider } from '../providers/events';
+import { FriendsProvider } from '../providers/friends';
 import { UsersProvider } from '../providers/users';
 import { Camera } from '@ionic-native/camera';
+import { IonicStorageModule } from '@ionic/storage';
 // import { File } from '@ionic-native/file';
 // import { Transfer } from '@ionic-native/transfer';
 // import { FilePath } from '@ionic-native/file-path';
@@ -27,7 +29,8 @@ import { EndpointsProvider } from '../providers/endpoints';
     BrowserModule,
     HttpModule,
     EnvironmentsModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,6 +46,7 @@ import { EndpointsProvider } from '../providers/endpoints';
     EndpointsProvider,
     AuthProvider,
     EventsProvider,
+    FriendsProvider,
     UsersProvider,
     Camera
     // File,

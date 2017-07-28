@@ -1,5 +1,5 @@
 /*
- * IWT - Post model
+ * IWT - Notifications model
  */
 "use strict";
 

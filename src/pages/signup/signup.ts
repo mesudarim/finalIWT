@@ -5,6 +5,8 @@ import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AlertController } from 'ionic-angular';
 
 import { MyApp } from '../../app/app.component'
+import { Storage } from '@ionic/storage';
+
 
 /**
  * Generated class for the SignupPage page.
@@ -30,7 +32,8 @@ export class SignupPage {
               private auth:AuthProvider,
               private formBuilder: FormBuilder,
               private alertCtrl: AlertController,
-              private myApp: MyApp
+              private myApp: MyApp,
+              private storage: Storage
           ) {
             this.signupForm = this.formBuilder.group({
               email: [''],
@@ -48,7 +51,12 @@ export class SignupPage {
         res =>{
           this.setPassword(res, this.signupForm.value)
           console.log('signup res-> ', res)
-          this.presentAlert();
+          this.storage.set('email', res.email);
+          this.storage.set('password', res.password);
+          this.storage.get('email').then((val) => {
+            console.log('email', val);
+          });
+          this.presentAlert(res);
         },
         err =>  {
           console.warn('signup err-> ', err)
@@ -66,10 +74,10 @@ export class SignupPage {
 
   }
 
-  presentAlert() {
+  presentAlert(user) {
   let alert = this.alertCtrl.create({
     title: 'Congratulations!',
-    subTitle: 'Your new account has just been created!',
+    subTitle: 'Welcome ' + user.nickname + ', your new account has just been created!',
     buttons: [
       {
         text: 'Dismiss',

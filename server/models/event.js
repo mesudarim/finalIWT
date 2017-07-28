@@ -1,5 +1,5 @@
 /*
- * IWT - Post model
+ * IWT - Event model
  */
 "use strict";
 

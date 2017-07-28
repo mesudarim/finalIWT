@@ -34,7 +34,7 @@ router.get("/:id", (req, res, next) => {
 });
 
 // read all the events
-router.get("/", 
+router.get("/",
             //auth.basic(),  c'est comme cela que cela devrait être fait sans passer par le login, il va de tout facon devoir verifier pour acceder aux events.
             (req, res, next) => {
     Event.find({/* no conditions */}).then(results => {
@@ -52,6 +52,19 @@ router.delete("/:id", (req, res, next) => {
             return res.status(404 /* Not Found */).send();
     }).catch(next)
 });
+
+
+// Juste pour nettoyer la base de donnée
+// // delete all event
+// router.delete("/", (req, res, next) => {
+//     const id = req.params.id;
+//     Event.remove({}).then(found => {
+//         if (found)
+//             return res.send(found);
+//         else
+//             return res.status(404 /* Not Found */).send();
+//     }).catch(next)
+// });
 
 module.exports = router;
 
