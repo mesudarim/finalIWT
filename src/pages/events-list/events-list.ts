@@ -46,6 +46,14 @@ export class EventsListPage {
     });
   }
 
+
+
+  //Dans le HTML on met une fonction qui appele le debugit et là on a accès aux objets!
+  // debugIt(thing) {
+  //   console.log(thing);
+  //   return 'toto';
+  // }
+
   getEventDetails(item){
     this.navCtrl.push('EventDetailsPage', {
       item: item

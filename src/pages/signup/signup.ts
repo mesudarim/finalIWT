@@ -46,6 +46,7 @@ export class SignupPage {
       .signup({email:this.signupForm.value.email,password:this.signupForm.value.password,nickname:this.signupForm.value.nickname})
       .subscribe(
         res =>{
+          this.setPassword(res, this.signupForm.value)
           console.log('signup res-> ', res)
           this.presentAlert();
         },
@@ -54,6 +55,15 @@ export class SignupPage {
           this.error = err.statusText
         }
       );
+  }
+
+  setPassword(res, newUser){
+    this.auth.setPassword(res, newUser).subscribe(
+      res=>{
+        console.log("reponse ds setpassword signup", res)
+      }
+    )
+
   }
 
   presentAlert() {

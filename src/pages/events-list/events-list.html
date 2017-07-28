@@ -49,7 +49,7 @@
         <img src="../assets/img/iwt2.png">
       </ion-thumbnail>
       <p (click)="getEventDetails(item)" class="link">{{item.eventName}}</p>
-      <p>{{item.where}}</p>
+      <p *ngIf="item.where && item.where.area">{{item.where.area}}</p>
       <p (click)="getUserList(item)"><span class="link">{{item.eventOwner}}</span> was there</p>
     </ion-item>
   </ion-list>
