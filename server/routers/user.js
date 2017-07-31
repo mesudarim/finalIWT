@@ -39,7 +39,14 @@ router.post('/login', (req, res, next) => {
       res.status(401).send()
     }
   }
-  )
+  ).catch(err => {
+      if (err.name === 'ValidationError') {
+          return res.status(400 /* Bad Request */).send({
+              message: err.message
+          });
+      }
+      return next(err);
+  });
 
 });
 

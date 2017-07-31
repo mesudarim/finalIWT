@@ -5,14 +5,42 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>notifications-list</ion-title>
+    <!-- <ion-title>{{userName}}</ion-title> -->
+    <ion-buttons end (click)="getFriendsList()">
+      <button ion-button icon-only >
+        <ion-icon ios="ios-contacts" md="md-contacts" ></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-buttons end>
+      <ion-item class="avatar">
+        <ion-avatar item-end>
+          <!--Ici l'image doit être prise de l'objet user / photo profile  -->
+          <img src="../assets/img/zorro.jpg">
+        </ion-avatar>
+      </ion-item>
+    </ion-buttons>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
+  <ion-list>
+    <!-- {{(events | async) | json}} -->
+    <ion-item *ngFor="let notification of (events | async)">
+      <ion-thumbnail item-start class="thumbnailEventList">
+        <img src="{{notification.imageUrl}}">
+      </ion-thumbnail>
+      <ion-thumbnail item-end class="thumbnailEventList iwt">
+        <img src="../assets/img/iwt2.png">
+      </ion-thumbnail>
+      <p (click)="getEventDetails(notification)" class="link">{{notification.eventName}}</p>
+      <p *ngIf="notification.where && notification.where.area">{{notification.where.area}}</p>
+      <p (click)="getUserList(notification)"><span class="link">{{notification.eventOwner}}</span> was there</p>
+    </ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="newEvent()"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
 
 </ion-content>

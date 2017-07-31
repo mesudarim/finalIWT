@@ -27,6 +27,14 @@
     </ion-item>
   </ion-list>
 
+
+  <ion-slides class="image-slider" loop="true" slidesPerView="2">
+    <ion-slide *ngFor="let img of images">
+      <img src="assets/img/{{img}}" class="thumb-img" imageViewer/>
+    </ion-slide>
+  </ion-slides>
+
+
   <!-- <ion-toolbar no-border-top class="tabs" >
     <ion-segment [(ngModel)]="tabs">
       <ion-segment-button value="galery">

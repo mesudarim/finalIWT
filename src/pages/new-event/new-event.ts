@@ -67,6 +67,7 @@ export class NewEventPage {
 
   initialize(){
     var a,lat,lon;
+    var geocoder = new google.maps.Geocoder;
     var searchBox: any = document.getElementById('autocomplete');
     var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(this.lat,this.lon));
     var input = document.getElementById('autocomplete');
@@ -81,8 +82,16 @@ export class NewEventPage {
          this.lon = place.geometry.location.lng();
          console.log(this.lat, this.lon)
          console.log("where" + this.where)
-
+         var latlng = {lat: this.lat, lng: this.lon};
+         geocoder.geocode({'location': latlng}, (results, status) => {
+             this.where = results[0].formatted_address;
+             this.area = results[1].formatted_address;
+             console.log(this.where)
+             console.log(this.area)
+           //})
+         });
        })
+
     });
     // google.maps.event.addDomListener(window, 'load', this.initialize);
   }
@@ -138,15 +147,8 @@ export class NewEventPage {
       eventName,
       duration
     }
-
     console.log(newEvent)
-
-    // if (this.eventForm.valid) {
-    //   console.log("submit" + this.eventForm.value)
-    //     //this.events.createNewEvent(this.event)
-    //   }
     this.events.createNewEvent(newEvent)
-    //this.events.createNewEvent()
   }
 
   openMap(){
@@ -164,7 +166,7 @@ export class NewEventPage {
 
   getToCam(){
     const options: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
@@ -178,5 +180,23 @@ export class NewEventPage {
      // Handle error
     });
   }
+
+  openGallery(){
+    const options: CameraOptions = {
+      quality: 50,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      //encodingType: this.camera.EncodingType.JPEG,
+      //mediaType: this.camera.MediaType.PICTURE,
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64:
+     let base64Image = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+     // Handle error
+    });
+}
 
 }

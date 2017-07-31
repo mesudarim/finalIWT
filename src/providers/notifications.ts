@@ -10,92 +10,60 @@ import 'rxjs/add/operator/map';
 import { EnvVariables } from '../app/environment/environment.token';
 import { IEnvironment } from "../../environments/env-model";
 
-// import { EventsListPage } from '../pages/events-list/events-list'
 /*
-  Generated class for the friendsProvider provider.
+  Generated class for the notificationsProvider provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular DI.
 */
 
-export interface IFriend {
-  id?: number;
-  nickname?: string;
+export interface INotification {
+  // id?: number;
+  // nickname?: string;
 }
 
 
 @Injectable()
-export class FriendsProvider {
-  public friends$: Observable<IFriend[]>;
-  private _friends$: BehaviorSubject<IFriend[]>;
+export class NotificationsProvider {
+  public notifications$: Observable<INotification[]>;
+  private _notifications$: BehaviorSubject<INotification[]>;
   private _dataStore: {  // This is where we will store our data in memory
-    friends: IFriend[]
+    notifications: INotification[]
   };
 
   data: any;
-  //private _friendUrl = 'http://localhost:3000/events';
+  //private _notificationUrl = 'http://localhost:3000/events';
 
-  private _friendUrl = 'http://localhost:3002/api/users';
+  private _notificationUrl = 'http://localhost:3002/api/users';
 
 
   constructor(private _http: Http) {
-      this._dataStore = { friends: [] };
-      this._friends$ = <BehaviorSubject<IFriend[]>>new BehaviorSubject([]);
-      this.friends$ = this._friends$.asObservable();
-
+      this._dataStore = { notifications: [] };
+      this._notifications$ = <BehaviorSubject<INotification[]>>new BehaviorSubject([]);
+      this.notifications$ = this._notifications$.asObservable();
   }
 
 
-  addFriend(user){
-    console.log(user)
-    let headers:Headers = new Headers({'Content-Type': 'application/json'});
-    //console.log(this.auth.user$)
-    // console.log(this.eventList.user.id)
-    //console.log(this.auth.user$.id)
+    loadAll():void {
+      console.log("entered load all notifications")
+      let headers:Headers = new Headers({'Content-Type': 'application/json'});
+      this._http.get(this._notificationUrl, {headers: headers})
+        .map(res => res.json())
+        .subscribe(
+              data => {
+                console.log("data dans subscribe " + data)
+                // add new datas to store.todos
+                this._dataStore.notifications = data;
+                // assign new state to observable Todos Subject
+                this._notifications$.next(Object.assign({}, this._dataStore).notifications);
+              },
+              error => {
+                console.log('ERROR', error);
+                 this.handleError(`${(error.statusText)? error.statusText + ' Could not load notifications.' : 'Could not load notifications.'}`) //console.log('Could not load todos.')
 
-  //   this._http.post(this._friendUrl + `/${this.event-list.user.id}/friends`, user, {headers: headers})
-  //   .map(response => response.json()) // return response as json
-  //    .subscribe(
-  //       data => {
-  //         console.log(data)
-  //         // // push new todo into _dataStore.todos
-  //         // this._dataStore.events.push(data);
-  //         // // assign new state to observable Todos Subject
-  //         // this._events$.next(Object.assign({}, this._dataStore).events);
-  //       },
-  //       error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
-  //    );
-  // }
-  //
-  //
-  // handleError(error:string):void {
-  //   console.error(error || 'Server error');
-  //   //alert(error || 'Server error');
-  }
-
-}
-
-
-    // loadAll():void {
-    //   console.log("entered load all friends")
-    //   let headers:Headers = new Headers({'Content-Type': 'application/json'});
-    //   this._http.get(this._friendUrl, {headers: headers})
-    //     .map(res => res.json())
-    //     .subscribe(
-    //           data => {
-    //             console.log("data dans subscribe " + data)
-    //             // add new datas to store.todos
-    //             this._dataStore.friends = data;
-    //             // assign new state to observable Todos Subject
-    //             this._friends$.next(Object.assign({}, this._dataStore).friends);
-    //           },
-    //           error => {
-    //             console.log('ERROR', error);
-    //              this.handleError(`${(error.statusText)? error.statusText + ' Could not load friends.' : 'Could not load friends.'}`) //console.log('Could not load todos.')
-    //
-    //            }
-    //        );
-    // };
+               }
+           );
+    };
 
 
 
@@ -122,6 +90,15 @@ export class FriendsProvider {
   //           error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
   //        );
   //     };
+
+
+
+  handleError(error:string):void {
+    console.error(error || 'Server error');
+    //alert(error || 'Server error');
+  }
+
+}
 
 //   this.data = null;
 //   console.log('Hello EventsProvider Provider');

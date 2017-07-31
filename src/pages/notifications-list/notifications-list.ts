@@ -4,7 +4,8 @@ import { Observable } from "rxjs";
 
 import { User } from '../../models/user'
 
-import { EventsProvider, IEvent } from '../../providers/events'
+import { NotificationsProvider, INotification } from '../../providers/notifications'
+import { AuthProvider } from '../../providers/auth'
 //import { EventsProvider, IEvent } from '../../providers/events'
 
 /**
@@ -20,15 +21,18 @@ import { EventsProvider, IEvent } from '../../providers/events'
 })
 export class NotificationsListPage {
 
+  public notifications: Observable<INotification[]>;
+  user;
+
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private eventsProvider: EventsProvider
+      private notificationsProvider: NotificationsProvider
     )
       {
-    // this.events=this.eventsProvider.events$;
-    // this.eventsProvider.loadAll()
-    // console.log("sent load all", this.events)
+    this.notifications=this.notificationsProvider.notifications$;
+    this.notificationsProvider.loadAll()
+    console.log("sent load all", this.notifications)
   }
 
   newEvent(){

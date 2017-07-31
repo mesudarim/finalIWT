@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, LoadingController, ToastController, AlertController } from 'ionic-angular';
 
 import { AuthProvider } from '../../providers/auth';
 
@@ -27,9 +27,9 @@ export class LoginPage {
               private readonly auth:AuthProvider,
               private readonly modalCtrl: ModalController,
               private readonly loadingCtrl: LoadingController,
-              private readonly toastCtrl: ToastController
+              private readonly toastCtrl: ToastController,
+              private alertCtrl: AlertController
             ) {
-
   }
 
 //   openSignup(){
@@ -55,7 +55,10 @@ login() {
       .finally(() => loading.dismiss())
       .subscribe(
         () => {},
-        err => this.handleError(err));
+        err => {this.handleError(err);
+                  this.presentAlert()
+                  //alert ( "pas bon")
+                  });
   }
 
   handleError(error: any) {
@@ -65,9 +68,17 @@ login() {
       duration: 5000,
       position: 'bottom'
     });
-
     toast.present();
   }
+
+  presentAlert() {
+  let alert = this.alertCtrl.create({
+    title: 'Wrong login details',
+    subTitle: "The application don't recognise your login or password",
+    buttons: ['Dismiss']
+  });
+  alert.present();
+}
 
   createNew(){
     this.navCtrl.push('SignupPage', {

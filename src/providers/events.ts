@@ -54,6 +54,9 @@ export class EventsProvider {
       this.events$ = this._events$.asObservable();
   }
 
+  // loadAllEvent(id) : Observable<Event[]> {
+  //   return this.authHttp.get(...);
+  // }
 
     loadAll():void {
       console.log("entered load all")

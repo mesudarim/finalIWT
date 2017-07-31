@@ -7,7 +7,13 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{item.eventOwner}}</ion-title>
+    <ion-title>{{item.nickname}}</ion-title>
+    <ion-buttons end (click)="addFriend(item)">
+      <button ion-button icon-only  class="addFriend">
+        <ion-icon ios="ios-add" md="md-add"></ion-icon>
+        <span class="spanText">Send friend request</span>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -16,17 +22,14 @@
 <ion-content padding>
   <!-- <new-event></new-event> -->
   <ion-list>
-    <ion-item *ngFor="let item of items">
-      <ion-thumbnail item-start>
-        <img src="{{item.imageUrl}}">
+    <ion-item *ngFor="let event of user">
+      <!-- <ion-thumbnail item-start>
+        <img src="{{event.imageUrl}}">
       </ion-thumbnail>
-      <h2 (click)="getUserList(item)">{{item.eventOwner}} was there</h2>
-      <p (click)="getEventDetails(item)">{{item.eventName}}</p>
-      <p>{{item.description}}</p>
+      <h2 (click)="getUserList(item)">{{user.nickname}} was there</h2>
+      <!-- <p (click)="getEventDetails(item)">{{item.eventName}}</p>
+      <p>{{item.description}}</p> --> -->
     </ion-item>
   </ion-list>
-  <ion-fab right bottom>
-    <button ion-fab color="primary" (click)="newEvent()"><ion-icon name="add"></ion-icon></button>
-  </ion-fab>
 
 </ion-content>

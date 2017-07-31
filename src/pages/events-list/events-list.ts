@@ -35,7 +35,7 @@ export class EventsListPage {
       console.log(this.user)
       this.auth.user$.subscribe((user) => {
         this.user = user;
-            console.log("logué", user)
+        console.log("logué", user)
         })
 }
 

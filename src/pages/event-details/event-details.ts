@@ -22,7 +22,7 @@ export class EventDetailsPage {
 
   // tab1Root: string = 'GaleryPage';
   // tab2Root: string = 'ChatPage';
-
+images = ['zorro.jpg', 'IWT.jpg', 'logo.png', 'logoMargin.png'];
   //tabs: string = "galery";
   isAndroid: boolean = false;
 

@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
 
 //import { Friend } from '../../models/user'
 
-import { FriendsProvider, IFriend } from '../../providers/friends'
+ import { FriendsProvider, IFriend } from '../../providers/friends'
 import { AuthProvider } from '../../providers/auth';
 
 /**
@@ -21,24 +21,34 @@ import { AuthProvider } from '../../providers/auth';
 })
 export class FriendsPage {
 
-  public friends: Observable<IFriend[]>;
+   public friends: Observable<IFriend[]>;
   text: string;
   private user;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private friendsProvider: FriendsProvider,
+               private friendsProvider: FriendsProvider,
               private auth: AuthProvider
             ) {
-                this.friends = this.friendsProvider.friends$;
-                this.friendsProvider.loadAll()
-                console.log("sent load all", this.friends)
+                 this.friends = this.friendsProvider.friends$;
+                // this.friendsProvider.loadAll()
+                // console.log("sent load all", this.friends)
                 this.auth.user$.subscribe(
+
                   (user) => {
+                    console.log("passé dans friends this.auth.users$")
                       this.user = user;
                       console.log(user);
                   }
                 )
+              }
+
+  getUserDetails(item){
+    console.log(item)
+    this.navCtrl.push('UserListPage', {
+        item: item
+      });
+    console.log("user clicked", item)
   }
 
 }
