@@ -54,9 +54,7 @@ login() {
       .login({email:this.email, password:this.password })
       .finally(() => loading.dismiss())
       .subscribe(
-        () => {
-          console.log("dans subscribe login")
-          this.myApp.rootPage = 'EventsListPage';},
+        () => {},
         err => this.handleError(err));
   }
 
