@@ -159,8 +159,8 @@ router.post("/:uid/notifications",
               (req, res, next) => {
     const user = res.locals.user;
     console.log("post notification-------------------", user)
-    User.find(user._id).then(results => {
-        console.log('results',results)
+    //User.find(user._id).then(results => {
+        //console.log('results',results)
         let updated = user
         if(updated.notifications.length === 0 ) {
           updated.notifications = []
@@ -168,7 +168,8 @@ router.post("/:uid/notifications",
         updated.notifications.push(req.body);
         console.log('updated-------------', updated);
         ////////////ICI CELA ECRASE LE HASH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
+        const promise = user.save();
+        //const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
             return promise.then(found => {
                 if (found){
                   console.log('found---------------', found);
@@ -178,8 +179,8 @@ router.post("/:uid/notifications",
                 else
                     return res.status(404 /* Not Found */).send();
             }).catch(next);
-    })
-    .catch(next);
+    //})
+    //.catch(next);
 });
 
 ///////////////////////////////
@@ -188,24 +189,25 @@ router.post("/:uid/notifications",
 
 //Get the friend list of the logged user
 
-//router.get("/friends",
-router.get("/:uid/friends",
-            //auth.basic(),
-            (req, res, next) => {
-    const user = app.locals.user;
-    const friends = user.friends
-    console.log("friends " + friends)
-    console.log("entré dans get friends " + user._id)
-    res.send(friends);
-});
+// router.get("/:uid/friends",
+// //router.get("/:uid/friends",
+//             auth.basic(),
+//             (req, res, next) => {
+//     //const user = app.locals.user;
+//     const user = req.user;
+//     const friends = user.friends
+//     console.log("friends " + friends)
+//     console.log("entré dans get friends " + user._id)
+//     res.send(friends);
+// });
 
 // push the new friends of the logged user
 router.post("/:uid/friends",
               //auth.basic(),
               (req, res, next) => {
     const user = res.locals.user;
-    User.find(user._id).then(results => {
-        console.log('results',results)
+    // User.find(user._id).then(results => {
+    //     console.log('results',results)
         let updated = user
         if(updated.friends.length === 0 ) {
           updated.friends = []
@@ -213,8 +215,8 @@ router.post("/:uid/friends",
         updated.friends.push(req.body);
         console.log('updated', updated);
         ////////////ICI CELA ECRASE LE HASH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
+        const promise = user.save();
+        // const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
             return promise.then(found => {
                 if (found){
                   console.log('found', found);
@@ -224,8 +226,8 @@ router.post("/:uid/friends",
                 else
                     return res.status(404 /* Not Found */).send();
             }).catch(next);
-    })
-    .catch(next);
+    // })
+    // .catch(next);
 });
 
 // remove a friend from the list of the logged user

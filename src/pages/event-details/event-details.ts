@@ -1,7 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 
-import { User } from '../../models/user'
+import { Event } from '../../models/event'
 //import { TabsComponent } from '../../components/tabs/tabs'
 
 /**
@@ -23,20 +23,28 @@ export class EventDetailsPage {
   // tab1Root: string = 'GaleryPage';
   // tab2Root: string = 'ChatPage';
 
-  tabs: string = "galery";
+  //tabs: string = "galery";
   isAndroid: boolean = false;
 
-  item: User;
+  item: Event;
   text: string;
+  eventDate: Date = null;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public platform: Platform
               ) {
+
         this.item = this.navParams.get('item');
         console.log(this.item);
+        console.log(this.item.when);
+        this.eventDate = this.item.when
         this.isAndroid = platform.is('android');
+
+
   }
+
+
 }
 
 

@@ -20,10 +20,12 @@ export class MyApp {
     this.auth.user$.subscribe((user) => {
       if (user) {
           //je suis logué
+          console.log("logué", user)
           this.rootPage = 'EventsListPage';
       }
       else {
         //je suis pas logué
+        console.log("pas logué")
         this.rootPage = 'LoginPage';
       }
     });
