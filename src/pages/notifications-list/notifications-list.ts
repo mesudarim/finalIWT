@@ -5,39 +5,31 @@ import { Observable } from "rxjs";
 import { User } from '../../models/user'
 
 import { EventsProvider, IEvent } from '../../providers/events'
-import { AuthProvider } from '../../providers/auth'
+//import { EventsProvider, IEvent } from '../../providers/events'
 
 /**
- * Generated class for the EventsListPage page.
+ * Generated class for the NotificationsListPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
  */
 @IonicPage()
 @Component({
-  selector: 'page-events-list',
-  templateUrl: 'events-list.html',
+  selector: 'page-notifications-list',
+  templateUrl: 'notifications-list.html',
 })
-export class EventsListPage {
+export class NotificationsListPage {
 
-  public events: Observable<IEvent[]>;
-  user;
-
-  constructor(public navCtrl: NavController,
-              public navParams: NavParams,
-              private eventsProvider: EventsProvider,
-              private auth: AuthProvider
-            ) {
-      this.events=this.eventsProvider.events$;
-      this.eventsProvider.loadAll()
-      console.log("sent load all", this.events)
-      this.user = this.auth.user$
-      console.log(this.user)
-      this.auth.user$.subscribe((user) => {
-        this.user = user;
-            console.log("logué", user)
-        })
-}
+  constructor(
+      public navCtrl: NavController,
+      public navParams: NavParams,
+      private eventsProvider: EventsProvider
+    )
+      {
+    // this.events=this.eventsProvider.events$;
+    // this.eventsProvider.loadAll()
+    // console.log("sent load all", this.events)
+  }
 
   newEvent(){
       // push another page onto the navigation stack
@@ -69,9 +61,13 @@ export class EventsListPage {
   getFriendsList(){
     // console.log("getFriendsList")
     this.navCtrl.push('FriendsPage', {
-      user: this.user
+      // user: User
     });
     //console.log("getFriendsList", User)
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad NotificationsListPage');
   }
 
 }

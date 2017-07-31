@@ -26,15 +26,12 @@ const userSchema = new mongoose.Schema({
 userSchema.statics.authenticate = function (emailAddress, password) {
     return this.findOne({email: emailAddress}).then(user => {
         if (!user){
-            console.log("Pas trouve");
             return false;
         }
-
         return bcrypt.compare(password, user.hash).then(success => {
-          console.log("trouve");
             return (success ? user : false);
-        });
-    });
+        }).catch (err => console.log('ERROR2', err));
+    }).catch(err => console.log('ERROR', err)) ;
 };
 
 /* set the user's password using bcrypt */

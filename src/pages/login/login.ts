@@ -27,29 +27,28 @@ export class LoginPage {
               private readonly auth:AuthProvider,
               private readonly modalCtrl: ModalController,
               private readonly loadingCtrl: LoadingController,
-              private readonly toastCtrl: ToastController,
-              private myApp: MyApp
+              private readonly toastCtrl: ToastController
             ) {
+
   }
 
 //   openSignup(){
 //   let modal = this.modalCtrl.create('SignupPage');
 //   modal.present();
 // }
+logout() {
+  this.auth.logout();
+}
 
 login() {
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Logging in ...'
     });
-
     loading.present();
-    //let email = this.email
-
-    setTimeout( _=>{
-       loading.dismiss();
-          }, 1000);
-
+    // setTimeout( _=>{
+    //    loading.dismiss();
+    //  }, 1000);
      console.log(this.email)
      this.auth
       .login({email:this.email, password:this.password })
@@ -63,7 +62,6 @@ login() {
 
   handleError(error: any) {
     let message: string = `${error.statusText}`;
-
     const toast = this.toastCtrl.create({
       message,
       duration: 5000,
@@ -77,10 +75,4 @@ login() {
     this.navCtrl.push('SignupPage', {
     });
   }
-
-  // ionViewDidLoad() {
-  //
-  //   console.log('ionViewDidLoad LoginPage');
-  // }
-
 }

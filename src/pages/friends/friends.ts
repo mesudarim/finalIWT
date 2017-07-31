@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 //import { Friend } from '../../models/user'
 
 import { FriendsProvider, IFriend } from '../../providers/friends'
+import { AuthProvider } from '../../providers/auth';
 
 /**
  * Generated class for the UserListPage page.
@@ -22,15 +23,22 @@ export class FriendsPage {
 
   public friends: Observable<IFriend[]>;
   text: string;
+  private user;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              private friendsProvider: FriendsProvider
+              private friendsProvider: FriendsProvider,
+              private auth: AuthProvider
             ) {
-
-                this.friends=this.friendsProvider.friends$;
+                this.friends = this.friendsProvider.friends$;
                 this.friendsProvider.loadAll()
                 console.log("sent load all", this.friends)
+                this.auth.user$.subscribe(
+                  (user) => {
+                      this.user = user;
+                      console.log(user);
+                  }
+                )
   }
 
 }

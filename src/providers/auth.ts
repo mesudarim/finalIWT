@@ -24,20 +24,20 @@ export class AuthProvider {
               //private readonly storage: Storage,
               private readonly endpoints: EndpointsProvider
             ) {
-
     console.log('Hello AuthProvider Provider');
   }
-
 
   login(values: any): Observable<any> {
     console.log("in login of this.auth");
     return this.http.post(this.endpoints.getLogin(), values)
-    .map(response => {
-          console.log("dans login respone", response)
-        response.text()
-      })
-    .catch(err => Observable.throw(this.handleErrors(err)));
-}
+      .map(response => response.json())
+      .map(user => this.authUser.next(user))
+      .catch(err => Observable.throw(this.handleErrors(err)));
+  }
+
+  logout() {
+    this.authUser.next(null);
+  }
 
   private handleErrors(err: any): any {
       if (!err.ok && err.statusText == '') {
@@ -47,7 +47,7 @@ export class AuthProvider {
     }
 
   signup(values: any): Observable<any> {
-    console.error(values)
+    console.log(values)
     return this.http.post(this.endpoints.getSignup(), values)
     .map(response => {
       console.log("response " + response)

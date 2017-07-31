@@ -15,16 +15,18 @@
 <ion-content padding>
   <ion-list>
     <ion-item>
-      <h2>{{item.place}}</h2>
+      <h2>{{item.where.address}}</h2>
     </ion-item>
-    <ion-item>
-      <h2>{{item.startDate}}</h2>
+    <ion-item >
+      <ion-label>When:</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="eventDate" end></ion-datetime>
+
     </ion-item>
     <ion-item>
       <h2>Nbr de participants</h2>
     </ion-item>
   </ion-list>
-  
+
   <!-- <ion-toolbar no-border-top class="tabs" >
     <ion-segment [(ngModel)]="tabs">
       <ion-segment-button value="galery">
