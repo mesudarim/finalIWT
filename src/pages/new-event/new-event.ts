@@ -10,6 +10,10 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 // import { FilePath } from '@ionic-native/file-path';
 
 import { EventsProvider } from '../../providers/events'
+import { NotificationsProvider } from '../../providers/notifications'
+
+import { User } from '../../models/user'
+
 //import { BehaviorSubject, Observable } from 'rxjs';
 
 
@@ -35,6 +39,7 @@ export class NewEventPage {
   eventName: string;
   map: MapPage;
   duration: string = "1 hour";
+  user: User;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -43,11 +48,14 @@ export class NewEventPage {
               private camera: Camera,
               public zone: NgZone,
               private events: EventsProvider,
+              private notifications: NotificationsProvider,
               private alertCtrl: AlertController
               // private transfer: Transfer,
               // private file: File,
               // private filePath: FilePath
   ) {
+    this.user = this.navParams.get('user')
+    console.log(this.user)
     // this.platform.ready().then(() => {
     //   //console.log('here', this)
     //   // this.initialize();
@@ -151,7 +159,7 @@ export class NewEventPage {
     console.log(newEvent)
     this.events.createNewEvent(newEvent)
     this.presentAlert(newEvent)
-    this.sendNotification(newEvent)
+    this.sendNotification(newEvent, this.user)
     // .subscribe(res=>{
     //   console.log("reponse ds setpassword signup", res)
     //   this.presentAlert(res);
@@ -162,8 +170,9 @@ export class NewEventPage {
     // })
   }
 
-  sendNotification(event){
-    console.log("sendNotification")
+  sendNotification(event, user){
+    console.log("sendNotification from new-event page")
+    this.notifications.sendNotification(event, user);
   }
 
   presentAlert(event) {
@@ -176,7 +185,6 @@ export class NewEventPage {
         role: 'cancel',
         handler: () => {
           this.navCtrl.pop();
-
         }
       }
       ]

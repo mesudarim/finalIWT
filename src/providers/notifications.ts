@@ -70,7 +70,57 @@ export class NotificationsProvider {
            );
     };
 
+    sendNotification(event, user):void{
+      let i;
+      console.log(event, user)
+      console.log("sendNotification in provider")
+      let body = JSON.stringify({
+                  eventId: event._id,
+                  when: event.when,
+                  where: event.where,
+                  duration: event.duration,
+                  eventName: event.eventName,
+                  userName: user.nickname,
+                  userId: user._id
+                });
+      console.log(body)
+      console.log(user.friends[0].id)
+      console.log(user.friends[1].id)
+      console.log(user.friends[2].id)
+      console.log(user.friends.id)
+      for (i = 0; i < user.friends.length; i++) {
+        let headers:Headers = new Headers({'Content-Type': 'application/json'});
+        this._http.post(`${this._notificationUrl}/${user.friends[i].id}/notifications`, body, {headers: headers})
+        .map(response => response.json()) // return response as json
+         .subscribe(
+            data => {
+              console.log(data)
+              // push new todo into _dataStore.todos
+              this._dataStore.notifications.push(data);
+              // assign new state to observable Todos Subject
+              this._notifications$.next(Object.assign({}, this._dataStore).notifications);
+            },
+            error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
+         )
+      }
+      //let friendId = user.friends.id
+      // let headers:Headers = new Headers({'Content-Type': 'application/json'});
+      // //user.friends.map(
+      //   this._http.post(this._notificationUrl + "/" + friendId + "/notifications" , body, {headers: headers})
+      //   .map(response => response.json()) // return response as json
+      //    .subscribe(
+      //       data => {
+      //         console.log(data)
+      //         // push new todo into _dataStore.todos
+      //         this._dataStore.notifications.push(data);
+      //         // assign new state to observable Todos Subject
+      //         this._notifications$.next(Object.assign({}, this._dataStore).notifications);
+      //       },
+      //       error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
+      //    )
+      //)
 
+    }
 
   // createNewEvent(newEvent : IEvent):void {
   //       console.log(newEvent)

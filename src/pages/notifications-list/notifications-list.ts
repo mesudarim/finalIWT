@@ -46,7 +46,7 @@ export class NotificationsListPage {
       // causing the nav controller to transition to the new page
       // optional data can also be passed to the pushed page.
       this.navCtrl.push('NewEventPage', {
-
+        user: this.user
       });
     }
 
@@ -71,7 +71,7 @@ export class NotificationsListPage {
   getFriendsList(){
     // console.log("getFriendsList")
     this.navCtrl.push('FriendsPage', {
-      // user: User
+      user: this.user
     });
     //console.log("getFriendsList", User)
   }
