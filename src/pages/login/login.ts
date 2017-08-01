@@ -36,9 +36,7 @@ export class LoginPage {
 //   let modal = this.modalCtrl.create('SignupPage');
 //   modal.present();
 // }
-logout() {
-  this.auth.logout();
-}
+
 
 login() {
     let loading = this.loadingCtrl.create({

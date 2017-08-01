@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
 import { Observable } from "rxjs";
 
 import { User } from '../../models/user'
 
 import { NotificationsProvider, INotification } from '../../providers/notifications'
 import { AuthProvider } from '../../providers/auth'
-//import { EventsProvider, IEvent } from '../../providers/events'
+import { EventsProvider, IEvent } from '../../providers/events'
 
 /**
  * Generated class for the NotificationsListPage page.
@@ -27,11 +27,13 @@ export class NotificationsListPage {
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private notificationsProvider: NotificationsProvider,
-      private auth: AuthProvider
+      private notif: NotificationsProvider,
+      private events: EventsProvider,
+      private auth: AuthProvider,
+      private toastCtrl: ToastController
     )
       {
-    this.notifications=this.notificationsProvider.notifications$;
+    this.notifications = this.notif.notifications$;
     //this.notificationsProvider.loadAll()
     //console.log("sent load all notifications", this.notifications)
     this.auth.user$.subscribe((user) => {
@@ -80,23 +82,30 @@ export class NotificationsListPage {
     console.log('ionViewDidLoad NotificationsListPage');
   }
 
-  iwtClicked(notification){
-    let nickname = this.user.nickname;
-    // let where = {lat: this.lat,
-    //             lng: this.lon,
-    //             address: this.where,
-    //             area: this.area};
-    // let eventName = this.eventName;
-    // let duration = this.duration
-    //
-    // let newEvent = {
-    //   when,
-    //   where,
-    //   eventName,
-    //   duration
-    // }
-    // console.log(newEvent)
-    // this.events.createNewEvent(newEvent)
+  iwtClicked(notification, user){
+    console.log("notification après le boutton iwt", notification, this.user)
+    this.notif.sendNotification(notification, this.user);
+    this.notif.addEventToUser(notification, this.user)
+    this.presentToast();
+    //this.events.addUserToEvent(notification, user);
+  }
+
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Notification sent!',
+      duration: 2000,
+      position: 'top'
+    });
+
+    toast.onDidDismiss(() => {
+      console.log('Dismissed toast');
+    });
+
+    toast.present();
+  }
+
+  logout() {
+    this.auth.logout();
   }
 
 }

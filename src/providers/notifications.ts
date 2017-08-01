@@ -71,7 +71,7 @@ export class NotificationsProvider {
     };
 
     sendNotification(event, user):void{
-      let i;
+      let i = 0;
       console.log(event, user)
       console.log("sendNotification in provider")
       let body = JSON.stringify({
@@ -84,10 +84,6 @@ export class NotificationsProvider {
                   userId: user._id
                 });
       console.log(body)
-      console.log(user.friends[0].id)
-      console.log(user.friends[1].id)
-      console.log(user.friends[2].id)
-      console.log(user.friends.id)
       for (i = 0; i < user.friends.length; i++) {
         let headers:Headers = new Headers({'Content-Type': 'application/json'});
         this._http.post(`${this._notificationUrl}/${user.friends[i].id}/notifications`, body, {headers: headers})
@@ -103,24 +99,59 @@ export class NotificationsProvider {
             error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
          )
       }
-      //let friendId = user.friends.id
-      // let headers:Headers = new Headers({'Content-Type': 'application/json'});
-      // //user.friends.map(
-      //   this._http.post(this._notificationUrl + "/" + friendId + "/notifications" , body, {headers: headers})
-      //   .map(response => response.json()) // return response as json
-      //    .subscribe(
-      //       data => {
-      //         console.log(data)
-      //         // push new todo into _dataStore.todos
-      //         this._dataStore.notifications.push(data);
-      //         // assign new state to observable Todos Subject
-      //         this._notifications$.next(Object.assign({}, this._dataStore).notifications);
-      //       },
-      //       error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
-      //    )
-      //)
 
     }
+
+    addEventToUser(event, user){
+      console.log(user._id)
+      console.log("addEventToUser")
+      let headers:Headers = new Headers({'Content-Type': 'application/json'});
+      console.log("juste avant http request")
+      this._http.post(`/${this._notificationUrl}/${user._id}/events`, event, {headers: headers})
+      .map(response => {
+                          console.log(response)
+                          response.json()
+                        }) // return response as json
+      //  .subscribe(
+      //     data => {
+      //       console.log(data)
+      //       // push new todo into _dataStore.todos
+      //       this._dataStore.notifications.push(data);
+      //       // assign new state to observable Todos Subject
+      //       this._notifications$.next(Object.assign({}, this._dataStore).notifications);
+      //     },
+      //     error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
+      //  )
+    }
+
+    handleError(error:string):void {
+      console.error(error || 'Server error');
+      //alert(error || 'Server error');
+    }
+
+  }
+
+
+
+
+
+
+  //let friendId = user.friends.id
+  // let headers:Headers = new Headers({'Content-Type': 'application/json'});
+  // //user.friends.map(
+  //   this._http.post(this._notificationUrl + "/" + friendId + "/notifications" , body, {headers: headers})
+  //   .map(response => response.json()) // return response as json
+  //    .subscribe(
+  //       data => {
+  //         console.log(data)
+  //         // push new todo into _dataStore.todos
+  //         this._dataStore.notifications.push(data);
+  //         // assign new state to observable Todos Subject
+  //         this._notifications$.next(Object.assign({}, this._dataStore).notifications);
+  //       },
+  //       error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
+  //    )
+  //)
 
   // createNewEvent(newEvent : IEvent):void {
   //       console.log(newEvent)
@@ -148,12 +179,6 @@ export class NotificationsProvider {
 
 
 
-  handleError(error:string):void {
-    console.error(error || 'Server error');
-    //alert(error || 'Server error');
-  }
-
-}
 
 //   this.data = null;
 //   console.log('Hello EventsProvider Provider');

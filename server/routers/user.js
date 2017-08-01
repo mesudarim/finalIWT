@@ -156,11 +156,40 @@ router.post("/:uid/actions/reset-password",
 //////////////////////////////
 
 // read the events of a user
-router.get("/:uid/myEvents", (req, res, next) => {
+router.get("/:uid/events", (req, res, next) => {
     const user = res.locals.user;
     return res.send(user);
 });
 
+//add event to a user
+router.post("/:uid/events",
+              //auth.basic(),
+              (req, res, next) => {
+    const user = res.locals.user;
+    console.log("post events-------------------", user)
+    //User.find(user._id).then(results => {
+        //console.log('results',results)
+        let updated = user
+        if(updated.events.length === 0 ) {
+          updated.events = []
+        }
+        updated.events.push(req.body);
+        console.log('updated-------------', updated);
+        ////////////ICI CELA ECRASE LE HASH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        const promise = user.save();
+        //const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
+            return promise.then(found => {
+                if (found){
+                  console.log('found---------------', found);
+                      return res.send(found);
+                }
+                    // return found
+                else
+                    return res.status(404 /* Not Found */).send();
+            }).catch(next);
+    //})
+    //.catch(next);
+});
 
 ///////////////////////////////
 ///////////NOTIFICATIONS

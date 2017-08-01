@@ -157,7 +157,7 @@ export class NewEventPage {
       duration
     }
     console.log(newEvent)
-    this.events.createNewEvent(newEvent)
+    this.events.createNewEvent(newEvent, this.user)
     this.presentAlert(newEvent)
     this.sendNotification(newEvent, this.user)
     // .subscribe(res=>{

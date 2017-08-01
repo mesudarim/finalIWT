@@ -18,7 +18,7 @@ import { IEnvironment } from "../../environments/env-model";
 */
 
 export interface IEvent {
-  id?: number;
+  id?: string;
   area?:string;
   eventOwner?: string;
   eventName?: string;
@@ -81,7 +81,7 @@ export class EventsProvider {
 
 
 
-  createNewEvent(newEvent : IEvent):void {
+  createNewEvent(newEvent : IEvent, user):void {
         console.log(newEvent)
         let body = JSON.stringify({
                     when: newEvent.when,
@@ -100,12 +100,42 @@ export class EventsProvider {
               this._dataStore.events.push(data);
               // assign new state to observable Todos Subject
               this._events$.next(Object.assign({}, this._dataStore).events);
+              this.addUserToEvent(data, user);
             },
             error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
          );
+
+
+
       };
 
-
+  addUserToEvent(event, user){
+    console.log("dans addEvent", event)
+    console.log("event id", event._id)
+    let body = JSON.stringify({
+                // eventId: event._id,
+                // when: event.when,
+                // where: event.where,
+                // duration: event.duration,
+                // eventName: event.eventName,
+                userName: user.nickname,
+                userId: user._id
+              });
+    console.log(body)
+    let headers:Headers = new Headers({'Content-Type': 'application/json'});
+    this._http.post(`${this._eventUrl}/${event._id}/users`, event, {headers: headers})
+    .map(response => response.json()) // return response as json
+     .subscribe(
+        data => {
+          console.log(data)
+          // push new todo into _dataStore.todos
+          this._dataStore.events.push(data);
+          // assign new state to observable Todos Subject
+          this._events$.next(Object.assign({}, this._dataStore).events);
+        },
+        error => this.handleError(`${(error.statusText)? error.statusText + ' Could not add user to event.' : 'Could not add user to event.'}`) //console.log('Could not create todo.')
+     );
+  }
 
   handleError(error:string):void {
     console.error(error || 'Server error');

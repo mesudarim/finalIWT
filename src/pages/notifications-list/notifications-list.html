@@ -20,6 +20,12 @@
         </ion-avatar>
       </ion-item>
     </ion-buttons>
+    <!-- <ion-buttons end>
+      <ion-item item-end (click)="logout()" class="logout">
+        <ion-icon name="power"></ion-icon>
+      </ion-item>
+    </ion-buttons> -->
+
   </ion-navbar>
 </ion-header>
 
@@ -31,12 +37,12 @@
       <ion-thumbnail item-start class="thumbnailEventList">
         <img src="{{notification.imageUrl}}">
       </ion-thumbnail>
-      <ion-thumbnail item-end class="thumbnailEventList iwt" (click)="iwtClicked()">
+      <ion-thumbnail item-end class="thumbnailEventList iwt" (click)="iwtClicked(notification)">
         <img src="../assets/img/iwt2.png">
       </ion-thumbnail>
       <p (click)="getEventDetails(notification)" class="link">{{notification.eventName}}</p>
-      <p *ngIf="notification.where && notification.where.area">{{notification.where}}</p>
-      <p (click)="getUserList(notification)"><span class="link">{{notification.nickname}}</span> was there</p>
+      <p *ngIf="notification.where && notification.where.area">{{notification.where.area}}</p>
+      <p (click)="getUserList(notification)"><span class="link">{{notification.userName}}</span> was there</p>
     </ion-item>
   </ion-list>
   <ion-fab right bottom>

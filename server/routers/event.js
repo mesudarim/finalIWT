@@ -18,7 +18,34 @@ router.post("/", function (req, res, next) {
     const input = req.body;
     Event.create(input).then(created => {
         return res.status(201 /* Created */).send(created);
+        console.log(created)
     }).catch(next);
+});
+
+//add user to an event
+router.post("/:id/users",
+            (req, res, next) => {
+    console.log("dans router.post add user***************")
+    //const input = req.body;
+    const input = req.body;
+    console.log(input)
+
+    let updated = input
+    if(updated.users.length === 0 ) {
+      updated.users = []
+    }
+    updated.users.push(req.body);
+    console.log("updated *********** ",updated)
+    const promise = input.save();
+    //const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
+        return promise.then(found => {
+            if (found){
+              console.log('found---------------', found);
+                  return res.send(found);
+            }
+            else
+                return res.status(404 /* Not Found */).send();
+        }).catch(next);
 });
 
 // read one Event
@@ -54,17 +81,17 @@ router.delete("/:id", (req, res, next) => {
 });
 
 
-// Juste pour nettoyer la base de donnée
-// // delete all event
-// router.delete("/", (req, res, next) => {
-//     const id = req.params.id;
-//     Event.remove({}).then(found => {
-//         if (found)
-//             return res.send(found);
-//         else
-//             return res.status(404 /* Not Found */).send();
-//     }).catch(next)
-// });
+//Juste pour nettoyer la base de donnée
+// delete all event
+router.delete("/", (req, res, next) => {
+    const id = req.params.id;
+    Event.remove({}).then(found => {
+        if (found)
+            return res.send(found);
+        else
+            return res.status(404 /* Not Found */).send();
+    }).catch(next)
+});
 
 module.exports = router;
 
