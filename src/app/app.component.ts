@@ -21,7 +21,8 @@ export class MyApp {
       if (user) {
           //je suis logué
           console.log("logué", user)
-          this.rootPage = 'EventsListPage';
+          //this.rootPage = 'EventsListPage';
+          this.rootPage = 'NotificationsListPage';
       }
       else {
         //je suis pas logué

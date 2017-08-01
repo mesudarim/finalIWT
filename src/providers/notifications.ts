@@ -18,8 +18,13 @@ import { IEnvironment } from "../../environments/env-model";
 */
 
 export interface INotification {
-  // id?: number;
-  // nickname?: string;
+  eventId?:string;
+  eventName?: string;
+  area?: string;
+  when?: string;
+  duration? : string;
+  userName?: string;
+  userId? : string;
 }
 
 

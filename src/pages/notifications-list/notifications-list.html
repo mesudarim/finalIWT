@@ -27,16 +27,16 @@
 <ion-content padding>
   <ion-list>
     <!-- {{(events | async) | json}} -->
-    <ion-item *ngFor="let notification of (events | async)">
+    <ion-item *ngFor="let notification of user.notifications">
       <ion-thumbnail item-start class="thumbnailEventList">
         <img src="{{notification.imageUrl}}">
       </ion-thumbnail>
-      <ion-thumbnail item-end class="thumbnailEventList iwt">
+      <ion-thumbnail item-end class="thumbnailEventList iwt" (click)="iwtClicked()">
         <img src="../assets/img/iwt2.png">
       </ion-thumbnail>
       <p (click)="getEventDetails(notification)" class="link">{{notification.eventName}}</p>
-      <p *ngIf="notification.where && notification.where.area">{{notification.where.area}}</p>
-      <p (click)="getUserList(notification)"><span class="link">{{notification.eventOwner}}</span> was there</p>
+      <p *ngIf="notification.where && notification.where.area">{{notification.where}}</p>
+      <p (click)="getUserList(notification)"><span class="link">{{notification.nickname}}</span> was there</p>
     </ion-item>
   </ion-list>
   <ion-fab right bottom>

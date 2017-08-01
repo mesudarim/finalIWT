@@ -33,14 +33,11 @@ export class FriendsPage {
                  this.friends = this.friendsProvider.friends$;
                 // this.friendsProvider.loadAll()
                 // console.log("sent load all", this.friends)
-                this.auth.user$.subscribe(
-
-                  (user) => {
+                this.auth.user$.subscribe((user) => {
                     console.log("passé dans friends this.auth.users$")
                       this.user = user;
                       console.log(user);
-                  }
-                )
+                  })
               }
 
   getUserDetails(item){

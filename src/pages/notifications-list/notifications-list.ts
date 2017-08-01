@@ -27,12 +27,18 @@ export class NotificationsListPage {
   constructor(
       public navCtrl: NavController,
       public navParams: NavParams,
-      private notificationsProvider: NotificationsProvider
+      private notificationsProvider: NotificationsProvider,
+      private auth: AuthProvider
     )
       {
     this.notifications=this.notificationsProvider.notifications$;
-    this.notificationsProvider.loadAll()
-    console.log("sent load all", this.notifications)
+    //this.notificationsProvider.loadAll()
+    //console.log("sent load all notifications", this.notifications)
+    this.auth.user$.subscribe((user) => {
+        console.log("passé dans friends this.auth.users$")
+          this.user = user;
+          console.log(user);
+      })
   }
 
   newEvent(){
@@ -72,6 +78,25 @@ export class NotificationsListPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad NotificationsListPage');
+  }
+
+  iwtClicked(notification){
+    let nickname = this.user.nickname;
+    // let where = {lat: this.lat,
+    //             lng: this.lon,
+    //             address: this.where,
+    //             area: this.area};
+    // let eventName = this.eventName;
+    // let duration = this.duration
+    //
+    // let newEvent = {
+    //   when,
+    //   where,
+    //   eventName,
+    //   duration
+    // }
+    // console.log(newEvent)
+    // this.events.createNewEvent(newEvent)
   }
 
 }

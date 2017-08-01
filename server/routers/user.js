@@ -79,23 +79,40 @@ router.get("/", (req, res, next) => {
 });
 
 
-// //Juste pour nettoyer la base de donnée
-// // delete all event
-// router.delete("/", (req, res, next) => {
-//     const id = req.params.id;
-//     User.remove({}).then(found => {
-//         if (found)
-//             return res.send(found);
-//         else
-//             return res.status(404 /* Not Found */).send();
-//     }).catch(next)
-// });
-//
+//Juste pour nettoyer la base de donnée
+// delete all event
+router.delete("/", (req, res, next) => {
+    const id = req.params.id;
+    User.remove({}).then(found => {
+        if (found)
+            return res.send(found);
+        else
+            return res.status(404 /* Not Found */).send();
+    }).catch(next)
+});
+
 // read a user
 router.get("/:uid", (req, res, next) => {
     const user = res.locals.user;
     return res.send(user);
 });
+
+
+// delete a user
+router.delete("/:uid",
+              //auth.basic(),
+              function (req, res, next) {
+    const logged_in = req.user;
+    const target = res.locals.user;
+    if (logged_in._id.toString() === target._id.toString())
+        return next();
+    else
+        res.status(403 /* Forbidden */).end();
+}, (req, res, next) => {
+    const user = res.locals.user;
+    user.remove().then(removed => res.send(removed)).catch(next);
+});
+
 
 
 
@@ -281,16 +298,15 @@ module.exports = router;
 
 
 
-// // delete a user
-// router.delete("/:uid", auth.basic(), function (req, res, next) {
-//     const logged_in = req.user;
-//     const target = res.locals.user;
-//     if (logged_in._id.toString() === target._id.toString())
-//         return next();
-//     else
-//         res.status(403 /* Forbidden */).end();
-// }, (req, res, next) => {
-//     const user = res.locals.user;
-//     user.remove().then(removed => res.send(removed)).catch(next);
-// });
-//
+// delete a user
+router.delete("/:uid", auth.basic(), function (req, res, next) {
+    const logged_in = req.user;
+    const target = res.locals.user;
+    if (logged_in._id.toString() === target._id.toString())
+        return next();
+    else
+        res.status(403 /* Forbidden */).end();
+}, (req, res, next) => {
+    const user = res.locals.user;
+    user.remove().then(removed => res.send(removed)).catch(next);
+});

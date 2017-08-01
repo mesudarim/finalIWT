@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, AlertController } from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth';
 import {Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { AlertController } from 'ionic-angular';
 
 import { MyApp } from '../../app/app.component'
 import { Storage } from '@ionic/storage';

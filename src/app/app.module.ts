@@ -10,6 +10,10 @@ import { AuthProvider } from '../providers/auth';
 import { EventsProvider } from '../providers/events';
 import { FriendsProvider } from '../providers/friends';
 import { UsersProvider } from '../providers/users';
+import { NotificationsProvider } from '../providers/notifications';
+import { EndpointsProvider } from '../providers/endpoints';
+
+
 import { Camera } from '@ionic-native/camera';
 import { IonicStorageModule } from '@ionic/storage';
 // import { File } from '@ionic-native/file';
@@ -18,7 +22,6 @@ import { IonicStorageModule } from '@ionic/storage';
 //import { MapComponent } from '../components/map/map';
 
 import { EnvironmentsModule } from './environment/environment.module'
-import { EndpointsProvider } from '../providers/endpoints';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,7 @@ import { EndpointsProvider } from '../providers/endpoints';
     EventsProvider,
     FriendsProvider,
     UsersProvider,
+    NotificationsProvider,
     Camera
     // File,
     // Transfer,

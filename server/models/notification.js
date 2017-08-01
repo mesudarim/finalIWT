@@ -7,9 +7,9 @@ const mongoose = require("mongoose");
 
 /* Schema */
 const notificationSchema = new mongoose.Schema({
-    // eventName:  String,
-    // when: String,
-    // where: String,
+    eventName:  String,
+    when: String,
+    where: String,
     // duration: String,
     nickname: String
 });

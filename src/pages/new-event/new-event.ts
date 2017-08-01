@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import {} from '@types/googlemaps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Platform } from 'ionic-angular';
@@ -42,7 +42,8 @@ export class NewEventPage {
               private geolocation: Geolocation,
               private camera: Camera,
               public zone: NgZone,
-              private events: EventsProvider
+              private events: EventsProvider,
+              private alertCtrl: AlertController
               // private transfer: Transfer,
               // private file: File,
               // private filePath: FilePath
@@ -149,6 +150,39 @@ export class NewEventPage {
     }
     console.log(newEvent)
     this.events.createNewEvent(newEvent)
+    this.presentAlert(newEvent)
+    this.sendNotification(newEvent)
+    // .subscribe(res=>{
+    //   console.log("reponse ds setpassword signup", res)
+    //   this.presentAlert(res);
+    // },
+    // err =>  {
+    //   console.warn('signup err-> ', err)
+    //   this.error = err.statusText
+    // })
+  }
+
+  sendNotification(event){
+    console.log("sendNotification")
+  }
+
+  presentAlert(event) {
+  let alert = this.alertCtrl.create({
+    title: 'New event created!',
+    subTitle: 'Your new event has been sent to your friends!',
+    buttons: [
+      {
+        text: 'Dismiss',
+        role: 'cancel',
+        handler: () => {
+          this.navCtrl.pop();
+
+        }
+      }
+      ]
+    });
+    alert.present();
+    //this.myApp.rootPage = 'EventsListPage';
   }
 
   openMap(){
