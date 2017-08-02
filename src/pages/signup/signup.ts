@@ -50,11 +50,11 @@ export class SignupPage {
         res =>{
           this.setPassword(res, this.signupForm.value)
           console.log('signup res-> ', res)
-          this.storage.set('email', res.email);
-          this.storage.set('password', res.password);
-          this.storage.get('email').then((val) => {
-            console.log('email', val);
-          });
+          // this.storage.set('email', res.email);
+          // this.storage.set('password', res.password);
+          // this.storage.get('email').then((val) => {
+          //   console.log('email', val);
+          // });
           this.presentAlert(res);
         },
         err =>  {
@@ -82,7 +82,7 @@ export class SignupPage {
         text: 'Dismiss',
         role: 'cancel',
         handler: () => {
-          this.myApp.rootPage = 'EventsListPage';
+          this.myApp.rootPage = 'NotificationsListPage';
         }
       }
       ]

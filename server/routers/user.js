@@ -266,7 +266,7 @@ router.post("/:uid/friends",
           updated.friends = []
         }
         updated.friends.push(req.body);
-        console.log('updated', updated);
+        console.log('updated***************************************', updated);
         ////////////ICI CELA ECRASE LE HASH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         const promise = user.save();
         // const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});

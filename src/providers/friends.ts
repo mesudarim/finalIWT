@@ -32,7 +32,7 @@ export class FriendsProvider {
     friends: IFriend[]
   };
 
-  data: void;
+  data: any;
   //private _friendUrl = 'http://localhost:3000/events';
 
   private _friendUrl = 'http://localhost:3002/api/users';
@@ -46,15 +46,12 @@ export class FriendsProvider {
   }
 
 
-  addFriend(user, friend):void{
+  addFriend(friend, user):void{
     console.log("addFriendToUser")
     let headers:Headers = new Headers({'Content-Type': 'application/json'});
     console.log("juste avant http request")
-    this._http.post(`/${this._friendUrl}/${user._id}/friend`, friend, {headers: headers})
-    .map(response => {
-                        console.log(response)
-                        response.json()
-                      }) // return response as json
+    this._http.post(`${this._friendUrl}/${user._id}/friends`, friend, {headers: headers})
+    .map(response => response.json()) // return response as json
      .subscribe(
         data => {
           console.log(data)
