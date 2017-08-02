@@ -34,9 +34,9 @@ export class UserListPage {
 
   }
 
-  addFriend(user){
-    this.friends.addFriend(user)
-    console.log("add friend", user)
-  }
+  // addFriend(friend){
+  //   this.friends.addFriend(friend)
+  //   console.log("add friend", friend)
+  // }
 
 }

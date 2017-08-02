@@ -28,24 +28,32 @@ router.post("/:id/users",
     console.log("dans router.post add user***************")
     //const input = req.body;
     const input = req.body;
+    console.log("req***************", req.params.id)
     console.log(input)
+    Event.findById(req.params.id, (err, found) => {
+        if (found){
+          var updated = found;
+          // if(updated.users.find((user)=>{
+          //   user.id === input.id
+          // })){
+          //   return res.status(404)
+          // }
+          updated.users.push(input)
+          const promise = Event.findByIdAndUpdate(req.params.id, updated, {overwrite: true, new: true});
+              return promise.then(found => {
+                  if (found){
+                    console.log('found---------------', found);
+                        return res.send(found);
+                  }
+                  else
+                      return res.status(404 /* Not Found */).send();
+              }).catch(next);
+              //return res.send(found);
+        }
+        else
+            return res.status(404 /* Not Found */).send();
+    });
 
-    let updated = input
-    if(updated.users.length === 0 ) {
-      updated.users = []
-    }
-    updated.users.push(req.body);
-    console.log("updated *********** ",updated)
-    const promise = input.save();
-    //const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
-        return promise.then(found => {
-            if (found){
-              console.log('found---------------', found);
-                  return res.send(found);
-            }
-            else
-                return res.status(404 /* Not Found */).send();
-        }).catch(next);
 });
 
 // read one Event

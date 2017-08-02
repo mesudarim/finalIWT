@@ -70,6 +70,8 @@ export class NotificationsProvider {
            );
     };
 
+
+
     sendNotification(event, user):void{
       let i = 0;
       console.log(event, user)
@@ -104,6 +106,8 @@ export class NotificationsProvider {
 
     addEventToUser(event, user){
       console.log(user._id)
+      console.log(event._id)
+
       console.log("addEventToUser")
       let headers:Headers = new Headers({'Content-Type': 'application/json'});
       console.log("juste avant http request")

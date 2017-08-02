@@ -166,7 +166,7 @@ router.post("/:uid/events",
               //auth.basic(),
               (req, res, next) => {
     const user = res.locals.user;
-    console.log("post events-------------------", user)
+    //console.log("post events-------------------", user)
     //User.find(user._id).then(results => {
         //console.log('results',results)
         let updated = user
@@ -174,13 +174,13 @@ router.post("/:uid/events",
           updated.events = []
         }
         updated.events.push(req.body);
-        console.log('updated-------------', updated);
+        //console.log('updated-------------', updated);
         ////////////ICI CELA ECRASE LE HASH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         const promise = user.save();
         //const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
             return promise.then(found => {
                 if (found){
-                  console.log('found---------------', found);
+                  //console.log('found---------------', found);
                       return res.send(found);
                 }
                     // return found
@@ -211,7 +211,7 @@ router.post("/:uid/notifications",
               //auth.basic(),
               (req, res, next) => {
     const user = res.locals.user;
-    console.log("post notification-------------------", user)
+    //console.log("post notification-------------------", user)
     //User.find(user._id).then(results => {
         //console.log('results',results)
         let updated = user
@@ -219,13 +219,13 @@ router.post("/:uid/notifications",
           updated.notifications = []
         }
         updated.notifications.push(req.body);
-        console.log('updated-------------', updated);
+        //console.log('updated-------------', updated);
         ////////////ICI CELA ECRASE LE HASH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         const promise = user.save();
         //const promise = User.findByIdAndUpdate(user._id, updated, {overwrite: true, new: true});
             return promise.then(found => {
                 if (found){
-                  console.log('found---------------', found);
+                  //console.log('found---------------', found);
                       return res.send(found);
                 }
                     // return found

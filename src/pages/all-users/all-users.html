@@ -1,0 +1,32 @@
+<!--
+  Generated template for the AllUsersPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>All Users</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let user of (user | async)">
+      <ion-thumbnail item-start>
+        <img src="{{user.imageUrl}}">
+      </ion-thumbnail>
+      <h2 (click)="getUserDetails(friend)" class="link">{{user.nickname}}</h2>
+      <ion-buttons end (click)="addFriend(user)">
+        <button ion-button icon-only  class="addFriend">
+          <ion-icon ios="ios-add" md="md-add"></ion-icon>
+          <span class="spanText">Send friend request</span>
+        </button>
+      </ion-buttons>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

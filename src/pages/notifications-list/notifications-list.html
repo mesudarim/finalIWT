@@ -12,6 +12,11 @@
         <ion-icon ios="ios-contacts" md="md-contacts" ></ion-icon>
       </button>
     </ion-buttons>
+    <ion-buttons end (click)="getAllUsers()">
+      <button ion-button icon-only >
+        <ion-icon name="search"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-buttons end>
       <ion-item class="avatar">
         <ion-avatar item-end>
@@ -20,6 +25,7 @@
         </ion-avatar>
       </ion-item>
     </ion-buttons>
+
     <!-- <ion-buttons end>
       <ion-item item-end (click)="logout()" class="logout">
         <ion-icon name="power"></ion-icon>

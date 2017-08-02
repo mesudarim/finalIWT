@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { Http, Headers } from '@angular/http';
+
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { Observable } from "rxjs";
@@ -21,16 +23,17 @@ import { AuthProvider } from '../../providers/auth';
 })
 export class FriendsPage {
 
-   public friends: Observable<IFriend[]>;
+  public friends: Observable<IFriend[]>;
   text: string;
   private user;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
                private friendsProvider: FriendsProvider,
-              private auth: AuthProvider
+              private auth: AuthProvider,
+              private _http: Http
             ) {
-                 this.friends = this.friendsProvider.friends$;
+                this.friends = this.friendsProvider.friends$;
                 // this.friendsProvider.loadAll()
                 // console.log("sent load all", this.friends)
                 this.auth.user$.subscribe((user) => {
@@ -48,4 +51,5 @@ export class FriendsPage {
     console.log("user clicked", item)
   }
 
+  
 }

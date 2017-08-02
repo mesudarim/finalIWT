@@ -11,7 +11,8 @@ const notificationSchema = new mongoose.Schema({
     when: String,
     where: String,
     // duration: String,
-    nickname: String
+    nickname: String,
+    id : String
 });
 
 /* Model */

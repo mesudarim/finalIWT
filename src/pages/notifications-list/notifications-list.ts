@@ -23,6 +23,8 @@ export class NotificationsListPage {
 
   public notifications: Observable<INotification[]>;
   user;
+  notification;
+  event;
 
   constructor(
       public navCtrl: NavController,
@@ -34,6 +36,18 @@ export class NotificationsListPage {
     )
       {
     this.notifications = this.notif.notifications$;
+    this.notifications.subscribe(()=>{
+      //this.notification = notification;
+      console.log(this.notifications);
+    })
+    this.events.loadAll()
+    this.event = this.events.events$;
+    this.event.subscribe((event)=>{
+      //this.notification = notification;
+      let i = event.length-1
+      console.log(event[i]);
+      this.event = event[i]
+    })
     //this.notificationsProvider.loadAll()
     //console.log("sent load all notifications", this.notifications)
     this.auth.user$.subscribe((user) => {
@@ -58,11 +72,6 @@ export class NotificationsListPage {
     });
   }
 
-  //Dans le HTML on met une fonction qui appele le debugit et là on a accès aux objets!
-  // debugIt(thing) {
-  //   console.log(thing);
-  //   return 'toto';
-  // }
 
   getEventDetails(item){
     this.navCtrl.push('EventDetailsPage', {
@@ -83,11 +92,16 @@ export class NotificationsListPage {
   }
 
   iwtClicked(notification, user){
-    console.log("notification après le boutton iwt", notification, this.user)
-    this.notif.sendNotification(notification, this.user);
-    this.notif.addEventToUser(notification, this.user)
+    console.log("notification après le boutton iwt", this.event, this.user)
+    this.notif.sendNotification(this.event, this.user);
+    this.notif.addEventToUser(this.event, this.user)
     this.presentToast();
-    //this.events.addUserToEvent(notification, user);
+    this.events.addUserToEvent(this.event, this.user);
+    this.disableIWT();
+  }
+
+  disableIWT(){
+    // ion-button.disabled=true;
   }
 
   presentToast() {
@@ -108,4 +122,17 @@ export class NotificationsListPage {
     this.auth.logout();
   }
 
+  getAllUsers(){
+    this.navCtrl.push('AllUsersPage', {
+    });
+  }
+
+
 }
+
+
+  //Dans le HTML on met une fonction qui appele le debugit et là on a accès aux objets!
+  // debugIt(thing) {
+  //   console.log(thing);
+  //   return 'toto';
+  // }

@@ -40,6 +40,7 @@ export class NewEventPage {
   map: MapPage;
   duration: string = "1 hour";
   user: User;
+  id: string;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -160,14 +161,6 @@ export class NewEventPage {
     this.events.createNewEvent(newEvent, this.user)
     this.presentAlert(newEvent)
     this.sendNotification(newEvent, this.user)
-    // .subscribe(res=>{
-    //   console.log("reponse ds setpassword signup", res)
-    //   this.presentAlert(res);
-    // },
-    // err =>  {
-    //   console.warn('signup err-> ', err)
-    //   this.error = err.statusText
-    // })
   }
 
   sendNotification(event, user){

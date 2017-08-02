@@ -32,7 +32,7 @@ export class FriendsProvider {
     friends: IFriend[]
   };
 
-  data: any;
+  data: void;
   //private _friendUrl = 'http://localhost:3000/events';
 
   private _friendUrl = 'http://localhost:3002/api/users';
@@ -46,32 +46,58 @@ export class FriendsProvider {
   }
 
 
-  addFriend(user){
-    console.log(user)
+  addFriend(user, friend):void{
+    console.log("addFriendToUser")
     let headers:Headers = new Headers({'Content-Type': 'application/json'});
-    //console.log(this.auth.user$)
-    // console.log(this.eventList.user.id)
-    //console.log(this.auth.user$.id)
-
-  //   this._http.post(this._friendUrl + `/${this.event-list.user.id}/friends`, user, {headers: headers})
-  //   .map(response => response.json()) // return response as json
-  //    .subscribe(
-  //       data => {
-  //         console.log(data)
-  //         // // push new todo into _dataStore.todos
-  //         // this._dataStore.events.push(data);
-  //         // // assign new state to observable Todos Subject
-  //         // this._events$.next(Object.assign({}, this._dataStore).events);
-  //       },
-  //       error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
-  //    );
-  // }
-  //
-  //
-  // handleError(error:string):void {
-  //   console.error(error || 'Server error');
-  //   //alert(error || 'Server error');
+    console.log("juste avant http request")
+    this._http.post(`/${this._friendUrl}/${user._id}/friend`, friend, {headers: headers})
+    .map(response => {
+                        console.log(response)
+                        response.json()
+                      }) // return response as json
+     .subscribe(
+        data => {
+          console.log(data)
+          // push new todo into _dataStore.todos
+          this._dataStore.friends.push(data);
+          // assign new state to observable Todos Subject
+          this._friends$.next(Object.assign({}, this._dataStore).friends)
+        },
+        error => this.handleError(`${(error.statusText)? error.statusText + ' Could not add friend.' : 'Could not add friend.'}`) //console.log('Could not create todo.')
+     )
   }
+
+  handleError(error:string):void {
+    console.error(error || 'Server error');
+    //alert(error || 'Server error');
+  }
+
+  // addFriend(user){
+  //   console.log(user)
+  //   let headers:Headers = new Headers({'Content-Type': 'application/json'});
+  //   //console.log(this.auth.user$)
+  //   // console.log(this.eventList.user.id)
+  //   //console.log(this.auth.user$.id)
+  //
+  // //   this._http.post(this._friendUrl + `/${this.event-list.user.id}/friends`, user, {headers: headers})
+  // //   .map(response => response.json()) // return response as json
+  // //    .subscribe(
+  // //       data => {
+  // //         console.log(data)
+  // //         // // push new todo into _dataStore.todos
+  // //         // this._dataStore.events.push(data);
+  // //         // // assign new state to observable Todos Subject
+  // //         // this._events$.next(Object.assign({}, this._dataStore).events);
+  // //       },
+  // //       error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
+  // //    );
+  // // }
+  // //
+  // //
+  // // handleError(error:string):void {
+  // //   console.error(error || 'Server error');
+  // //   //alert(error || 'Server error');
+  // }
 
 }
 

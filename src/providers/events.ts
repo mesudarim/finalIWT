@@ -82,16 +82,7 @@ export class EventsProvider {
 
 
   createNewEvent(newEvent : IEvent, user):void {
-        console.log(newEvent)
-        let body = JSON.stringify({
-                    when: newEvent.when,
-                    where: newEvent.where,
-                    duration: newEvent.duration,
-                    eventName: newEvent.eventName
-                  });
-        console.log(body)
-        let headers:Headers = new Headers({'Content-Type': 'application/json'});
-        this._http.post(this._eventUrl, body, {headers: headers})
+        this._http.post(this._eventUrl, newEvent)
         .map(response => response.json()) // return response as json
          .subscribe(
             data => {
@@ -104,26 +95,24 @@ export class EventsProvider {
             },
             error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
          );
-
-
-
       };
 
   addUserToEvent(event, user){
-    console.log("dans addEvent", event)
+    console.log("dans addUserToEvent", event)
     console.log("event id", event._id)
-    let body = JSON.stringify({
+    console.log("user id", user._id)
+    //let body = JSON.stringify({
                 // eventId: event._id,
                 // when: event.when,
                 // where: event.where,
                 // duration: event.duration,
                 // eventName: event.eventName,
-                userName: user.nickname,
+    let body =  {userName: user.nickname,
                 userId: user._id
-              });
+              };
     console.log(body)
     let headers:Headers = new Headers({'Content-Type': 'application/json'});
-    this._http.post(`${this._eventUrl}/${event._id}/users`, event, {headers: headers})
+    this._http.post(`${this._eventUrl}/${event._id}/users`, body, {headers: headers})
     .map(response => response.json()) // return response as json
      .subscribe(
         data => {
@@ -143,43 +132,3 @@ export class EventsProvider {
   }
 
 }
-
-//   this.data = null;
-//   console.log('Hello EventsProvider Provider');
-// load() {
-//   return this._http.get(this._eventUrl);
-// }
-//
-// load() {
-//     if (this.data) {
-//       return Promise.resolve(this.data);
-//     }
-//
-//     return new Promise(resolve => {
-//
-//       this._http.get(`${this.envVariables.apiEndpoint+this._eventUrl}`)
-//         .map(res => res.json())
-//         .subscribe(data => {
-//           this.data = data;
-//           resolve(this.data);
-//         });
-//     });
-//   }
-
-
-//   this._http.get(this._eventUrl)
-//     .map(res => res.json())
-//     .subscribe(data => {
-//       this.data = data;
-//       resolve(this.data);
-//     });
-// });
-
-
-    //   this._http.get(this._eventUrl)
-    //     .map(res => res.json())
-    //     .subscribe(data => {
-    //       this.data = data;
-    //       resolve(this.data);
-    //     });
-    // });
