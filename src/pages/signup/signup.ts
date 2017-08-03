@@ -82,7 +82,7 @@ export class SignupPage {
         text: 'Dismiss',
         role: 'cancel',
         handler: () => {
-          this.myApp.rootPage = 'NotificationsListPage';
+          //this.myApp.rootPage = 'NotificationsListPage';
         }
       }
       ]

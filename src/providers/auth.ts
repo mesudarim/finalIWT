@@ -59,12 +59,14 @@ export class AuthProvider {
 }
 
   setPassword(user, newUser){
-    console.log("dans setPassword")
+    console.log("dans setPassword", user)
     return this.http.post(this.endpoints.setPassword(user._id), newUser)
     .map(response => {
         console.log("response final" + response)
+        this.authUser.next(user)
         return response.text();
-                      }).catch(err => Observable.throw(this.handleErrors(err)))
+        })
+        .catch(err => Observable.throw(this.handleErrors(err)))
   }
 
 }
