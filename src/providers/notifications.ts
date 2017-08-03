@@ -10,6 +10,9 @@ import 'rxjs/add/operator/map';
 import { EnvVariables } from '../app/environment/environment.token';
 import { IEnvironment } from "../../environments/env-model";
 
+import { prodVariables } from '../../environments/production'
+
+
 /*
   Generated class for the notificationsProvider provider.
 
@@ -39,7 +42,10 @@ export class NotificationsProvider {
   data: any;
   //private _notificationUrl = 'http://localhost:3000/events';
 
-  private _notificationUrl = 'http://localhost:3002/api/users';
+  //private _notificationUrl = 'http://localhost:3002/api/users';
+
+  private _notificationUrl = (process.env.IONIC_ENV === 'prod')? prodVariables.apiEndpoint+"/api/users" : "http://localhost:3002/api/users";
+
 
 
   constructor(private _http: Http) {
@@ -88,7 +94,7 @@ export class NotificationsProvider {
       console.log(body)
       for (i = 0; i < user.friends.length; i++) {
         let headers:Headers = new Headers({'Content-Type': 'application/json'});
-        this._http.post(`${this._notificationUrl}/${user.friends[i].id}/notifications`, body, {headers: headers})
+        this._http.post(`${this._notificationUrl}/${user.friends[i]._id}/notifications`, body, {headers: headers})
         .map(response => response.json()) // return response as json
          .subscribe(
             data => {

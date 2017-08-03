@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { prodVariables } from '../../environments/production'
 
 /*
   Generated class for the EndpointsProvider provider.
@@ -9,7 +10,10 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class EndpointsProvider {
 
-  API_PATH: string = "http://localhost:3002";
+  API_PATH: string = (process.env.IONIC_ENV === 'prod')? prodVariables.apiEndpoint : "http://localhost:3002";
+
+  //API_PATH: string = "http://localhost:3002";
+
 
   getAuth(){
     return this.API_PATH + "/api/authenticate";
@@ -29,9 +33,4 @@ export class EndpointsProvider {
   setPassword(userId){
     return this.API_PATH + "/api/users/" + userId + "/actions/set-password";
   }
-
-  // getPlaces(){
-  //   return this.API_PATH + "/api/places"
-  // }
-
 }

@@ -7,6 +7,7 @@ import { User } from '../../models/user'
 import { NotificationsProvider, INotification } from '../../providers/notifications'
 import { AuthProvider } from '../../providers/auth'
 import { EventsProvider, IEvent } from '../../providers/events'
+import { UsersProvider, IUser } from '../../providers/users'
 
 /**
  * Generated class for the NotificationsListPage page.
@@ -32,6 +33,7 @@ export class NotificationsListPage {
       private notif: NotificationsProvider,
       private events: EventsProvider,
       private auth: AuthProvider,
+      private usersProvider: UsersProvider,
       private toastCtrl: ToastController
     )
       {
@@ -94,15 +96,30 @@ export class NotificationsListPage {
   iwtClicked(notification, user){
     console.log("notification après le boutton iwt", this.event, this.user)
     this.notif.sendNotification(this.event, this.user);
-    this.notif.addEventToUser(this.event, this.user)
+    this.usersProvider.addEventToUser(this.event, this.user)
     this.presentToast();
     this.events.addUserToEvent(this.event, this.user);
     this.disableIWT();
   }
 
+  // getMyEvents(){
+  //   this.navCtrl.push('FriendsPage', {
+  //     user: this.user
+  //   });
+  //   //this.usersProvider.getMyEvents(this.user)
+  // }
+
   disableIWT(){
     // ion-button.disabled=true;
   }
+
+  // isNotificationDisabled(notification: INotification) {
+  //   console.log(this.user.events)
+  //   if (this.user.events.findIndex((item) => item._id === this.event._id) > -1) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   presentToast() {
     let toast = this.toastCtrl.create({

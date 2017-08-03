@@ -17,7 +17,7 @@
         <ion-icon name="search"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-buttons end>
+    <ion-buttons end (click)="getMyEvents()">
       <ion-item class="avatar">
         <ion-avatar item-end>
           <!--Ici l'image doit être prise de l'objet user / photo profile  -->
@@ -43,9 +43,14 @@
       <ion-thumbnail item-start class="thumbnailEventList">
         <img src="{{notification.imageUrl}}">
       </ion-thumbnail>
-      <ion-thumbnail item-end class="thumbnailEventList iwt" (click)="iwtClicked(notification)">
+  <!-- [ngClass]="{'disabled': isNotificationDisabled(notification)  }" -->
+          <ion-thumbnail item-end class="thumbnailEventList iwt" (click)="iwtClicked(notification)">
+            <img src="../assets/img/iwt2.png">
+          </ion-thumbnail>
+
+      <!-- <ion-thumbnail item-end class="thumbnailEventList iwt" (click)="iwtClicked(notification)">
         <img src="../assets/img/iwt2.png">
-      </ion-thumbnail>
+      </ion-thumbnail> -->
       <p (click)="getEventDetails(notification)" class="link">{{notification.eventName}}</p>
       <p *ngIf="notification.where && notification.where.area">{{notification.where.area}}</p>
       <p (click)="getUserList(notification)"><span class="link">{{notification.userName}}</span> was there</p>

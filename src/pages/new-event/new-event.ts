@@ -11,6 +11,8 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { EventsProvider } from '../../providers/events'
 import { NotificationsProvider } from '../../providers/notifications'
+import { UsersProvider, IUser } from '../../providers/users'
+
 
 import { User } from '../../models/user'
 
@@ -42,6 +44,8 @@ export class NewEventPage {
   user: User;
   id: string;
 
+  event;
+
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               private platform: Platform,
@@ -50,11 +54,23 @@ export class NewEventPage {
               public zone: NgZone,
               private events: EventsProvider,
               private notifications: NotificationsProvider,
+              private usersProvider: UsersProvider,
               private alertCtrl: AlertController
               // private transfer: Transfer,
               // private file: File,
               // private filePath: FilePath
   ) {
+
+    this.events.loadAll()
+    this.event = this.events.events$;
+    this.event.subscribe((event)=>{
+      //this.notification = notification;
+      let i = event.length-1
+      console.log(event[i]);
+      this.event = event[i]
+    })
+
+
     this.user = this.navParams.get('user')
     console.log(this.user)
     // this.platform.ready().then(() => {
@@ -158,9 +174,14 @@ export class NewEventPage {
       duration
     }
     console.log(newEvent)
+
     this.events.createNewEvent(newEvent, this.user)
     this.presentAlert(newEvent)
-    this.sendNotification(newEvent, this.user)
+    // console.log("this.event dann submit new event", this.event)
+    // /////////////////////////////////////////////////////////
+    // this.sendNotification(this.event, this.user)
+    // this.usersProvider.addEventToUser(newEvent, this.user)
+
   }
 
   sendNotification(event, user){
@@ -177,6 +198,18 @@ export class NewEventPage {
         text: 'Dismiss',
         role: 'cancel',
         handler: () => {
+          this.events.loadAll()
+          this.event = this.events.events$;
+          this.event.subscribe((event)=>{
+            //this.notification = notification;
+            let i = event.length-1
+            console.log(event[i]);
+            this.event = event[i]
+          })
+          console.log("this.event dann submit new event", this.event)
+          /////////////////////////////////////////////////////////
+          this.sendNotification(this.event, this.user)
+          this.usersProvider.addEventToUser(this.event, this.user)
           this.navCtrl.pop();
         }
       }

@@ -9,6 +9,9 @@ import 'rxjs/add/operator/map';
 
 import { EnvVariables } from '../app/environment/environment.token';
 import { IEnvironment } from "../../environments/env-model";
+
+import { prodVariables } from '../../environments/production'
+
 /*
   Generated class for the UsersProvider provider.
 
@@ -31,7 +34,10 @@ export class UsersProvider {
   };
 
   data: any;
-  private _userUrl = 'http://localhost:3002/api/users/';
+  //private _userUrl = 'http://localhost:3002/api/users/';
+
+  private _userUrl = (process.env.IONIC_ENV === 'prod')? prodVariables.apiEndpoint+"/api/users" : "http://localhost:3002/api/users";
+
 
   constructor(private _http: Http) {
     this._dataStore = { users: [] };
@@ -78,6 +84,23 @@ export class UsersProvider {
                }
            );
     };
+
+    addEventToUser(event, user):void{
+      console.log("addEventToUser")
+      let headers:Headers = new Headers({'Content-Type': 'application/json'});
+      this._http.post(`${this._userUrl}/${user._id}/events`, event, {headers: headers})
+      .map(response => response.json()) // return response as json
+       .subscribe(
+          data => {
+            console.log(data)
+            // push new todo into _dataStore.todos
+            this._dataStore.users.push(data);
+            // assign new state to observable Todos Subject
+            this._users$.next(Object.assign({}, this._dataStore).users)
+          },
+          error => this.handleError(`${(error.statusText)? error.statusText + ' Could not add event to user.' : 'Could not add event to user.'}`) //console.log('Could not create todo.')
+       )
+    }
 
     handleError(error:string):void {
       console.error(error || 'Server error');

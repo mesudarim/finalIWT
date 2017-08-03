@@ -14,4 +14,9 @@ page-notifications-list {
   ion-item.item-md.logout{
     border-bottom: 0px;
   }
+
+  .disabled{
+    pointer-events: none;
+    filter: opacity(50%);
+  }
 }

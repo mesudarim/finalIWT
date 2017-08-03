@@ -10,6 +10,9 @@ import 'rxjs/add/operator/map';
 import { EnvVariables } from '../app/environment/environment.token';
 import { IEnvironment } from "../../environments/env-model";
 
+import { prodVariables } from '../../environments/production'
+
+
 // import { EventsListPage } from '../pages/events-list/events-list'
 /*
   Generated class for the friendsProvider provider.
@@ -35,7 +38,10 @@ export class FriendsProvider {
   data: any;
   //private _friendUrl = 'http://localhost:3000/events';
 
-  private _friendUrl = 'http://localhost:3002/api/users';
+  //private _friendUrl = 'http://localhost:3002/api/users';
+
+  private _friendUrl = (process.env.IONIC_ENV === 'prod')? prodVariables.apiEndpoint+"/api/users" : "http://localhost:3002/api/users";
+
 
 
   constructor(private _http: Http) {
@@ -61,6 +67,25 @@ export class FriendsProvider {
           this._friends$.next(Object.assign({}, this._dataStore).friends)
         },
         error => this.handleError(`${(error.statusText)? error.statusText + ' Could not add friend.' : 'Could not add friend.'}`) //console.log('Could not create todo.')
+     )
+     this.addMyNewFriend(friend, user)
+  }
+
+  addMyNewFriend(friend, user){
+    console.log("addMyNewFriend")
+    let headers:Headers = new Headers({'Content-Type': 'application/json'});
+    console.log("juste avant http request")
+    this._http.post(`${this._friendUrl}/${friend._id}/friends`, user, {headers: headers})
+    .map(response => response.json()) // return response as json
+     .subscribe(
+        data => {
+          console.log(data)
+          // push new todo into _dataStore.todos
+          this._dataStore.friends.push(data);
+          // assign new state to observable Todos Subject
+          this._friends$.next(Object.assign({}, this._dataStore).friends)
+        },
+        error => this.handleError(`${(error.statusText)? error.statusText + ' Could not add newFriend.' : 'Could not add newFriend.'}`) //console.log('Could not create todo.')
      )
   }
 

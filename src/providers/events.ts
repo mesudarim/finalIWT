@@ -10,6 +10,9 @@ import 'rxjs/add/operator/map';
 import { EnvVariables } from '../app/environment/environment.token';
 import { IEnvironment } from "../../environments/env-model";
 
+import { prodVariables } from '../../environments/production'
+
+
 /*
   Generated class for the EventsProvider provider.
 
@@ -45,7 +48,8 @@ export class EventsProvider {
   data: any;
   //private _eventUrl = 'http://localhost:3000/events';
 
-  private _eventUrl = 'http://localhost:3002/api/events';
+  //private _eventUrl = 'http://localhost:3002/api/events';
+  private _eventUrl = (process.env.IONIC_ENV === 'prod')? prodVariables.apiEndpoint+"/api/events" : "http://localhost:3002/api/events";
 
 
   constructor(private _http: Http) {
@@ -53,10 +57,6 @@ export class EventsProvider {
       this._events$ = <BehaviorSubject<IEvent[]>>new BehaviorSubject([]);
       this.events$ = this._events$.asObservable();
   }
-
-  // loadAllEvent(id) : Observable<Event[]> {
-  //   return this.authHttp.get(...);
-  // }
 
     loadAll():void {
       console.log("entered load all")
@@ -92,6 +92,7 @@ export class EventsProvider {
               // assign new state to observable Todos Subject
               this._events$.next(Object.assign({}, this._dataStore).events);
               this.addUserToEvent(data, user);
+              return data
             },
             error => this.handleError(`${(error.statusText)? error.statusText + ' Could not create the event.' : 'Could not create the event.'}`) //console.log('Could not create todo.')
          );
@@ -101,12 +102,6 @@ export class EventsProvider {
     console.log("dans addUserToEvent", event)
     console.log("event id", event._id)
     console.log("user id", user._id)
-    //let body = JSON.stringify({
-                // eventId: event._id,
-                // when: event.when,
-                // where: event.where,
-                // duration: event.duration,
-                // eventName: event.eventName,
     let body =  {userName: user.nickname,
                 userId: user._id
               };
@@ -127,7 +122,7 @@ export class EventsProvider {
   }
 
   handleError(error:string):void {
-    
+
     console.error(error || 'Server error');
     //alert(error || 'Server error');
   }
