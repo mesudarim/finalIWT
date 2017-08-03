@@ -127,6 +127,7 @@ export class EventsProvider {
   }
 
   handleError(error:string):void {
+    
     console.error(error || 'Server error');
     //alert(error || 'Server error');
   }
