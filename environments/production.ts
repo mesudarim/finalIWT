@@ -5,7 +5,7 @@ export const prodVariables:IEnvironment = {
   ionicEnvName: 'prod',
 
   // Front-end
-  apiEndpoint: 'http://localhost:8080',
+  apiEndpoint: 'https://hidden-retreat-24990.herokuapp.com',
 
   // Back-end
   dbHost: 'mongodb://rafa:behappy1@ds131583.mlab.com:31583',
