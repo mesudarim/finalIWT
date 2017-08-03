@@ -52,6 +52,12 @@ export class AllUsersPage {
 
   }
 
+  getUserList(item){
+    this.navCtrl.push('UserListPage', {
+        item: item
+    });
+  }
+
   // ionViewDidLoad() {
   //   console.log('ionViewDidLoad AllUsersPage');
   // }

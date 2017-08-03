@@ -19,13 +19,15 @@
       <ion-thumbnail item-start>
         <img src="{{user.imageUrl}}">
       </ion-thumbnail>
-      <h2 (click)="getUserDetails(friend)" class="link">{{user.nickname}}</h2>
-      <ion-buttons end (click)="addFriend(user)">
-        <button ion-button icon-only  class="addFriend">
+      <span (click)="getUserList(user)" class="link">{{user.nickname}}</span>
+      <ion-icon ios="ios-add" md="md-add" item-end (click)="addFriend(user)"></ion-icon>
+      <!-- <button ion-button end (click)="addFriend(user)">Send friend request</button> -->
+      <!-- <ion-buttons end (click)="addFriend(user)">
+
           <ion-icon ios="ios-add" md="md-add"></ion-icon>
           <span class="spanText">Send friend request</span>
-        </button>
-      </ion-buttons>
+
+      </ion-buttons> -->
     </ion-item>
 
   </ion-list>

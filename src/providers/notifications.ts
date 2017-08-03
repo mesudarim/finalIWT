@@ -94,7 +94,7 @@ export class NotificationsProvider {
       console.log(body)
       for (i = 0; i < user.friends.length; i++) {
         let headers:Headers = new Headers({'Content-Type': 'application/json'});
-        this._http.post(`${this._notificationUrl}/${user.friends[i]._id}/notifications`, body, {headers: headers})
+        this._http.post(`${this._notificationUrl}/${user.friends[i]._id}/notifications`, event, {headers: headers})
         .map(response => response.json()) // return response as json
          .subscribe(
             data => {

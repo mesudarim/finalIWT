@@ -53,7 +53,7 @@
       </ion-thumbnail> -->
       <p (click)="getEventDetails(notification)" class="link">{{notification.eventName}}</p>
       <p *ngIf="notification.where && notification.where.area">{{notification.where.area}}</p>
-      <p (click)="getUserList(notification)"><span class="link">{{notification.userName}}</span> was there</p>
+      <p (click)="getUserList(notification)"><span class="link">{{notification.nickname}}</span> was there</p>
     </ion-item>
   </ion-list>
   <ion-fab right bottom>

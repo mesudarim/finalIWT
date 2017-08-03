@@ -184,10 +184,7 @@ export class NewEventPage {
 
   }
 
-  sendNotification(event, user){
-    console.log("sendNotification from new-event page")
-    this.notifications.sendNotification(event, user);
-  }
+
 
   presentAlert(event) {
   let alert = this.alertCtrl.create({
@@ -217,6 +214,11 @@ export class NewEventPage {
     });
     alert.present();
     //this.myApp.rootPage = 'EventsListPage';
+  }
+
+  sendNotification(event, user){
+    console.log("sendNotification from new-event page")
+    this.notifications.sendNotification(event, user);
   }
 
   openMap(){

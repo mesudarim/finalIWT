@@ -1,3 +1,50 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>My events</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- <new-event></new-event> -->
+  <ion-list *ngIf="user">
+    <ion-item *ngFor="let event of user.events">
+      <ion-thumbnail item-start class="thumbnailEventList">
+        <img src="{{event.imageUrl}}">
+      </ion-thumbnail>
+      <p (click)="getEventDetails(event)" class="link">{{event.eventName}}</p>
+      <p *ngIf="event.where && event.where.area">{{event.where.area}}</p>
+      <p (click)="getUserList(event)"><span class="link">{{event.when}}</span> was there</p>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--
 "clean": "ionic-app-scripts clean",
     "build": "ionic-app-scripts build",
@@ -14,19 +61,19 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
-  <ion-navbar>
+<!-- <ion-header>
+  <ion-navbar> -->
     <!-- <ion-title>{{userName}}</ion-title> -->
-    <ion-buttons end (click)="getFriendsList()">
+    <!-- <ion-buttons end (click)="getFriendsList()">
       <button ion-button icon-only >
         <ion-icon ios="ios-contacts" md="md-contacts" ></ion-icon>
       </button>
     </ion-buttons>
     <ion-buttons end>
       <ion-item class="avatar">
-        <ion-avatar item-end>
+        <ion-avatar item-end> -->
           <!--Ici l'image doit être prise de l'objet user / photo profile  -->
-          <img src="../assets/img/zorro.jpg">
+          <!-- <img src="../assets/img/zorro.jpg">
         </ion-avatar>
       </ion-item>
     </ion-buttons>
@@ -35,9 +82,9 @@
 
 
 <ion-content padding>
-  <ion-list>
+  <ion-list> -->
     <!-- {{(events | async) | json}} -->
-    <ion-item *ngFor="let item of (events | async)">
+    <!-- <ion-item *ngFor="let item of (events | async)">
       <ion-thumbnail item-start class="thumbnailEventList">
         <img src="{{item.imageUrl}}">
       </ion-thumbnail>
@@ -53,4 +100,4 @@
     <button ion-fab color="primary" (click)="newEvent()"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-</ion-content>
+</ion-content> -->

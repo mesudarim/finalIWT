@@ -26,6 +26,7 @@ export class NotificationsListPage {
   user;
   notification;
   event;
+  usersProv
 
   constructor(
       public navCtrl: NavController,
@@ -37,6 +38,13 @@ export class NotificationsListPage {
       private toastCtrl: ToastController
     )
       {
+    this.usersProvider.loadAll()
+    this.usersProv = this.usersProvider.users$
+    this.usersProv.subscribe(()=>{
+      console.log(this.usersProv);
+    })
+
+
     this.notifications = this.notif.notifications$;
     this.notifications.subscribe(()=>{
       //this.notification = notification;
@@ -74,6 +82,12 @@ export class NotificationsListPage {
     });
   }
 
+  getMyEvents(){
+    this.usersProvider.loadAll()
+    this.navCtrl.push('EventsListPage', {
+      user: this.user
+    });
+  }
 
   getEventDetails(item){
     this.navCtrl.push('EventDetailsPage', {
@@ -94,20 +108,13 @@ export class NotificationsListPage {
   }
 
   iwtClicked(notification, user){
-    console.log("notification après le boutton iwt", this.event, this.user)
-    this.notif.sendNotification(this.event, this.user);
-    this.usersProvider.addEventToUser(this.event, this.user)
+    console.log("notification après le boutton iwt", notification, this.user)
+    this.notif.sendNotification(notification, this.user);
+    this.usersProvider.addEventToUser(notification, this.user)
     this.presentToast();
-    this.events.addUserToEvent(this.event, this.user);
+    this.events.addUserToEvent(notification, this.user);
     this.disableIWT();
   }
-
-  // getMyEvents(){
-  //   this.navCtrl.push('FriendsPage', {
-  //     user: this.user
-  //   });
-  //   //this.usersProvider.getMyEvents(this.user)
-  // }
 
   disableIWT(){
     // ion-button.disabled=true;

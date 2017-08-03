@@ -47,23 +47,6 @@ export class UsersProvider {
     // this.load()
   }
 
-  // load() {
-  //     console.log("dans le load")
-  //     if (this.data) {
-  //       return Promise.resolve(this.data);
-  //     }
-  //
-  //     return new Promise(resolve => {
-  //
-  //       this._http.get(this._userUrl)
-  //         .map(res => res.json())
-  //         .subscribe(data => {
-  //           this.data = data;
-  //           resolve(this.data);
-  //         });
-  //     });
-  //   }
-
     loadAll():void {
       console.log("entered load all")
       let headers:Headers = new Headers({'Content-Type': 'application/json'});
@@ -101,6 +84,8 @@ export class UsersProvider {
           error => this.handleError(`${(error.statusText)? error.statusText + ' Could not add event to user.' : 'Could not add event to user.'}`) //console.log('Could not create todo.')
        )
     }
+
+
 
     handleError(error:string):void {
       console.error(error || 'Server error');
