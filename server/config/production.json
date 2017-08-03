@@ -1,0 +1,8 @@
+{
+    "server": {
+        "port": 3002
+    },
+    "mongodb": {
+        "database": "mongodb://rafa:behappy1@ds131583.mlab.com:31583/iwt-application"
+    }
+}

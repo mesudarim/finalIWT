@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "NODE_ENV=development nodemon --verbose",
+    "start": "NODE_ENV=production node ./index.js",
     "test": "NODE_ENV=test mocha"
   },
   "keywords": [],
@@ -25,5 +26,8 @@
     "chai": "^4.0.2",
     "mocha": "^3.4.2",
     "supertest": "^3.0.0"
-  }
+  },
+  "engines": {
+   "node": "~7.0.0"
+ }
 }

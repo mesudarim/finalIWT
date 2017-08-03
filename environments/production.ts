@@ -8,6 +8,6 @@ export const prodVariables:IEnvironment = {
   apiEndpoint: 'http://localhost:8080',
 
   // Back-end
-  dbHost: 'mongodb://localhost:27017',
-  dbName: 'test'
+  dbHost: 'mongodb://rafa:behappy1@ds131583.mlab.com:31583',
+  dbName: 'iwt-application'
 };
